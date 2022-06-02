@@ -1,7 +1,7 @@
 <?php 
   session_start();
   if(isset($_SESSION['unique_id'])){
-    header("location: search.php");
+    header("location: /");
   }
   
   $page_title = "Sign Up";
@@ -10,10 +10,9 @@
 <?php include_once "tml/noheader.php"; ?>
   <main class="container vh-100 d-lg-flex align-items-center justify-content-center">
 	  <h1 class="text-center m-5">Sign up to start chatting!</h1>
-	  <div class="wrapper container">
+	  <div class="wrapper p-3">
 		<section class="form signup p-3">
 		  <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
-			<div class="name-details">		
 			  <h2 class="text-center pb-2">Registration</h2>	  
 			  <div class="error-text text-center pb-2"></div>
 			  <div class="input-group mb-3 field input">
@@ -37,8 +36,8 @@
 				<span class="input-group-text" id="basic-addon1">Avatar</span>
 			    <input type="file" name="image" placeholder="Enter your email" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1" required>
 			  </div>
-			  <div class="field button">
-				<button class="text-center btn btn-primary mx-auto" type="submit" name="submit">Continue to Datings</button>
+			  <div class="field button d-flex">
+				<button class="text-center btn btn-primary mx-auto logreg" type="submit" name="submit">Continue to Datings</button>
 			  </div>
 		  </form>
 		  <div class="link my-3 text-center">Already signed up? <a href="login.php">Login now</a></div>
