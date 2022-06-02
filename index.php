@@ -1,19 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Datings</title>
-    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="css/fontello-embedded.css" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  </head>
-  <body style="height: 100% !important">
-    <header>
-		123
-	</header>
-	
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-  </body>
+<?php 
+  session_start();
+  if(isset($_SESSION['unique_id'])){
+    header("location: search.php");
+  }
+  
+  $page_title = "Sign Up";
+?>
+
+<?php include_once "tml/header.php"; ?>
+<body>
+  <h1 class="m-5">Sign up to start chatting!</h1>
+  <div class="wrapper">
+    <section class="form signup">
+      <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <div class="error-text"></div>
+        <div class="name-details">
+          <div class="field input">
+            <label>First Name</label>
+            <input type="text" name="fname" placeholder="First name" required>
+          </div>
+          <div class="field input">
+            <label>Last Name</label>
+            <input type="text" name="lname" placeholder="Last name" required>
+          </div>
+        </div>
+        <div class="field input">
+          <label>Email Address</label>
+          <input type="text" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="field input">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Enter new password" required>
+          <i class="fas fa-eye"></i>
+        </div>
+        <div class="field image">
+          <label>Select Image</label>
+          <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg" required>
+        </div>
+        <div class="field button">
+          <input type="submit" name="submit" value="Continue to Datings">
+        </div>
+      </form>
+      <div class="link">Already signed up? <a href="login.php">Login now</a></div>
+    </section>
+  </div>
+
+  <script src="javascript/pass-show-hide.js"></script>
+  <script src="javascript/signup.js"></script>
+
+</body>
 </html>
