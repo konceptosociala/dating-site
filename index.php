@@ -8,7 +8,7 @@
 ?>
 
 <?php include_once "tml/header.php"; ?>
-<body>
+<body class=body>
   <h1 class="m-5">Sign up to start chatting!</h1>
   <div class="wrapper">
     <section class="form signup">

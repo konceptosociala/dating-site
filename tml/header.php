@@ -11,7 +11,7 @@
   </head>
   <body style="height: 100% !important">
     <header>
-		<nav class="navbar navbar-expand-lg p-3 fixed-top">
+		<nav class="bg-light navbar navbar-expand-lg p-3 fixed-top">
 			<a class="navbar-brand fixed-top m-3" href="#">LOGOTYPE</a>
 			<button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navcont" aria-controls="navcont" aria-expanded="false" aria-label="Toggle navigation">
 			  <span class="navbar-toggler-icon"></span>
