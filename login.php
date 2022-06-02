@@ -1,7 +1,7 @@
 <?php 
   session_start();
   if(isset($_SESSION['unique_id'])){
-    header("location: search.php");
+    header("location: /");
   }
   
   $page_title = "Log In";
@@ -27,7 +27,7 @@
           <input type="submit" name="submit" value="Continue to Datings">
         </div>
       </form>
-      <div class="link">Not yet signed up? <a href="index.php">Signup now</a></div>
+      <div class="link">Not yet signed up? <a href="signup.php">Signup now</a></div>
     </section>
   </div>
   

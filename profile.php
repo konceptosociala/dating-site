@@ -3,16 +3,9 @@
 	<main>
 		<div class="container">
 			<div class="row">
-				<div class="row">
-					<div class="photo">
-						<img class="img-fluid" width=250 src="https://images.unsplash.com/photo-1615022702095-ff2c036f3360?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwZ2lybHxlbnwwfHwwfHw%3D&w=1000&q=80">
-					</div>	
-					<div class="">
-						<h2>Public photos</h2>
-					</div>	
-				</div>
-				<div class="">
-					<div class="" >
+				<div class="col-lg-4">1</div>
+				<div class="container d-flex flex-column col-lg-4">
+					<div class="container">
 						<h2>Bio</h2>
 						<table>
 							<tr>
@@ -55,22 +48,8 @@
 							</tr>
 						</table>
 					</div>
-					<div class="about">
-						<h2>About me</h2>
-					</div>
-					<p>1</p>
-					<p>1</p>
 				</div>
-			</div>
-			<div class="">
-				<div class="profile-control">
-					<p>Your profile</p>
-					<p>Edit</p>
-					<p>Log out</p>
-				</div>
-				<p>1</p>
-				<p>1</p>
-				<p>1</p>
+				<div class="col-lg-2">3</div>
 			</div>
 		</div>
 	</main>

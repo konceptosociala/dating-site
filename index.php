@@ -1,52 +1,128 @@
 <?php 
   session_start();
-  if(isset($_SESSION['unique_id'])){
-    header("location: search.php");
+  if(!isset($_SESSION['unique_id'])){
+    header("location: signup.php");
   }
   
-  $page_title = "Sign Up";
 ?>
 
+
 <?php include_once "tml/header.php"; ?>
-<body class=body>
-  <h1 class="m-5">Sign up to start chatting!</h1>
-  <div class="wrapper">
-    <section class="form signup">
-      <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
-        <div class="error-text"></div>
-        <div class="name-details">
-          <div class="field input">
-            <label>First Name</label>
-            <input type="text" name="fname" placeholder="First name" required>
-          </div>
-          <div class="field input">
-            <label>Last Name</label>
-            <input type="text" name="lname" placeholder="Last name" required>
-          </div>
-        </div>
-        <div class="field input">
-          <label>Email Address</label>
-          <input type="text" name="email" placeholder="Enter your email" required>
-        </div>
-        <div class="field input">
-          <label>Password</label>
-          <input type="password" name="password" placeholder="Enter new password" required>
-          <i class="fas fa-eye"></i>
-        </div>
-        <div class="field image">
-          <label>Select Image</label>
-          <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg" required>
-        </div>
-        <div class="field button">
-          <input type="submit" name="submit" value="Continue to Datings">
-        </div>
-      </form>
-      <div class="link">Already signed up? <a href="login.php">Login now</a></div>
-    </section>
-  </div>
 
-  <script src="javascript/pass-show-hide.js"></script>
-  <script src="javascript/signup.js"></script>
+<div class="bg-light container-fluid mx-auto my-3">
+	<div class="row p-5 sbg-header">
+		<h1 class="text-light col-md-6 col-sm-12 my-md-auto my-sm-5 display-4 text-center animate__animated animate__flash">Find your love!</h1>
+		<div class="col-md-6 col-sm-12 my-sm-5">
+			<form class="container">
+				<div class="input-group mb-3">
+				  <span class="input-group-text" id="basic-addon1">User ID</span>
+				  <input type="text" class="form-control" placeholder="ID" aria-label="ID" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group mb-3 col-1">
+				  <span class="input-group-text" id="basic-addon1">Country</span>
+				  <select class="form-control" aria-label="Country" aria-describedby="basic-addon1">
+					<option selected disabled></option>
+					<option disabled>Select country</option>
+					<option>Ukraine</option>
+					<option>Czech Republic</option>
+					<option>USA</option>
+					<option>Moldova</option>
+					<option>Poland</option>
+				  </select>
+				</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text" id="basic-addon1">Hair Color</span>
+				  <select class="form-control" aria-label="Country" aria-describedby="basic-addon1">
+					<option selected disabled></option>
+					<option disabled>Select color</option>
+					<option>Blonde</option>
+					<option>Brunette</option>
+					<option>Red</option>
+					<option>Black</option>
+				  </select>
+				</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text">Age</span>
+				  <input type="text" class="form-control" placeholder="From" aria-label="From">
+				  <span class="input-group-text">↔</span>
+				  <input type="text" class="form-control" placeholder="To" aria-label="To">
+				</div>
+				<button class="btn btn-light" type="submit">Search</button>
+			</form>
+		</div>
+	</div>
+	<div class="container mt-3">
+		<div class="row">
+			<div class="col-lg-4 col-md-6 col-sm-12 my-3">
+				<div class="card mx-3">
+					<div class="card-body">
+						<h5 class="card-title">Helena, 21</h5>
+						<p class="card-text text-secondary">Offline</h5>
+					</div>
+					<div class="card-field" style="background-image: url('https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 my-3">
+				<div class="card mx-3">
+					<div class="card-body">
+						<h5 class="card-title">Oleksandra, 19</h5>
+						<p class="card-text text-success">• Online</h5>
+					</div>
+					<div class="card-field" style="background-image: url('https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 my-3">
+				<div class="card mx-3">
+					<div class="card-body">
+						<h5 class="card-title">Oleksandra, 19</h5>
+						<p class="card-text text-success">• Online</h5>
+					</div>
+					<div class="card-field" style="background-image: url('https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 my-3">
+				<div class="card mx-3">
+					<div class="card-body">
+						<h5 class="card-title">Oleksandra, 19</h5>
+						<p class="card-text text-success">• Online</h5>
+					</div>
+					<div class="card-field" style="background-image: url('https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 my-3">
+				<div class="card mx-3">
+					<div class="card-body">
+						<h5 class="card-title">Oleksandra, 19</h5>
+						<p class="card-text text-success">• Online</h5>
+					</div>
+					<div class="card-field" style="background-image: url('https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 my-3">
+				<div class="card mx-3">
+					<div class="card-body">
+						<h5 class="card-title">Oleksandra, 19</h5>
+						<p class="card-text text-success">• Online</h5>
+					</div>
+					<div class="card-field" style="background-image: url('https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
+						&nbsp;
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>
