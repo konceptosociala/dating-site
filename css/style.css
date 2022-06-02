@@ -1,5 +1,7 @@
 * {
 	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
 
 .bio {
@@ -11,12 +13,28 @@
 	box-shadow: 0 0 3px rgb(200,200,200);
 }
 
+.soft-shadow {
+	box-shadow: 0 0 3px rgb(200,200,200);
+}
+
 .card-field {
 	height: 400px;
 	background: url("https://images.unsplash.com/photo-1615022702095-ff2c036f3360?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwZ2lybHxlbnwwfHwwfHw%3D&w=1000&q=80");
 	background-size: cover;
 	background-position: center;
 	border-radius: 0 0 5px 5px;
+}
+
+.profile-table tr td {
+	padding-top: 10px;
+	padding-left: 15px;
+	border: none;
+}
+
+.profile-table tr th {
+	padding-top: 10px;
+	padding-left: 15px;
+	border: none;
 }
 
 .sbg-bg {
@@ -30,4 +48,3 @@
 .sbg-header {
 	background:#306BAC;
 }
-

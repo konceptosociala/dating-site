@@ -9,7 +9,7 @@
 
 <?php include_once "tml/header.php"; ?>
 
-<div class="bg-light container-fluid mx-auto my-3">
+<div class="bg-light container-fluid mx-auto">
 	<div class="row p-5 sbg-header">
 		<h1 class="text-light col-md-6 col-sm-12 my-md-auto my-sm-5 display-4 text-center animate__animated animate__flash">Find your love!</h1>
 		<div class="col-md-6 col-sm-12 my-sm-5">

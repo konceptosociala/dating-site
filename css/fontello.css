@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'fontello';
-  src: url('../font/fontello.eot?56551114');
-  src: url('../font/fontello.eot?56551114#iefix') format('embedded-opentype'),
-       url('../font/fontello.woff2?56551114') format('woff2'),
-       url('../font/fontello.woff?56551114') format('woff'),
-       url('../font/fontello.ttf?56551114') format('truetype'),
-       url('../font/fontello.svg?56551114#fontello') format('svg');
+  src: url('../font/fontello.eot?77230096');
+  src: url('../font/fontello.eot?77230096#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff2?77230096') format('woff2'),
+       url('../font/fontello.woff?77230096') format('woff'),
+       url('../font/fontello.ttf?77230096') format('truetype'),
+       url('../font/fontello.svg?77230096#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?56551114#fontello') format('svg');
+    src: url('../font/fontello.svg?77230096#fontello') format('svg');
   }
 }
 */
@@ -59,9 +59,17 @@
 .icon-search:before { content: '\e802'; } /* '' */
 .icon-chat:before { content: '\e803'; } /* '' */
 .icon-heart:before { content: '\e804'; } /* '' */
+.icon-star:before { content: '\e805'; } /* '' */
+.icon-star-empty:before { content: '\e806'; } /* '' */
+.icon-eye:before { content: '\e807'; } /* '' */
+.icon-eye-off:before { content: '\e808'; } /* '' */
 .icon-gauge-1:before { content: '\f0e4'; } /* '' */
+.icon-smile:before { content: '\f118'; } /* '' */
+.icon-frown:before { content: '\f119'; } /* '' */
 .icon-thumbs-up-alt:before { content: '\f164'; } /* '' */
 .icon-female:before { content: '\f182'; } /* '' */
 .icon-male:before { content: '\f183'; } /* '' */
 .icon-paper-plane:before { content: '\f1d8'; } /* '' */
+.icon-sticky-note:before { content: '\f249'; } /* '' */
+.icon-sticky-note-o:before { content: '\f24a'; } /* '' */
 .icon-commenting:before { content: '\f27a'; } /* '' */

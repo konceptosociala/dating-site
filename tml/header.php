@@ -10,10 +10,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   </head>
-  <body style="height: 100% !important">
-    <header>
-		<nav class="sbg-nav navbar navbar-expand-lg p-3 fixed-top">
-			<a class="text-light navbar-brand" href="/">LOGOTYPE</a>
+  <body style="height: 100vh !important">
+    <header class="sticky-top m-0">
+		<nav class="sbg-nav navbar navbar-expand-lg p-3 m-0">
+			<a class="text-light navbar-brand " href="/">LOGOTYPE</a>
 			<button class="bg-light navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcont" aria-controls="navcont" aria-expanded="false" aria-label="Toggle navigation">
 			  <span class="navbar-toggler-icon"></span>
 			</button>

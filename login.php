@@ -7,7 +7,7 @@
   $page_title = "Log In";
 ?>
 
-<?php include_once "tml/header.php"; ?>
+<?php include_once "tml/noheader.php"; ?>
 
   <div class="wrapper">
     <section class="form login">
