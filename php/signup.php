@@ -1,6 +1,5 @@
 <?php
 	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
-	
     session_start();
     include_once "config.php";
     $fname = mysqli_real_escape_string($conn, $_POST['fname']);
@@ -39,6 +38,7 @@
                                 $users_t->email = $email;
                                 $users_t->password = $encrypt_pass;
                                 $users_t->img = $new_img_name;
+                                $users_t->type = "male";
                                 $users_t->status = $status;
                                 
                                 $success_id = R::store($users_t);

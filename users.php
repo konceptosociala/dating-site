@@ -10,11 +10,8 @@
     <section class="users">
       <header>
         <div class="content">
-          <?php 
-            $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
-            if(mysqli_num_rows($sql) > 0){
-              $row = mysqli_fetch_assoc($sql);
-            }
+          <?php            
+            $row = R::findOne('users', 'unique_id = ?', [ $_SESSION['unique_id'] ]);
           ?>
           <img src="php/images/<?php echo $row['img']; ?>" alt="">
           <div class="details">
