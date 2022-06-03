@@ -1,65 +1,80 @@
+<?php 
+
+	include 'php/config.php';
+
+	session_start();
+	if(!isset($_SESSION['unique_id'])){
+		header("location: signup.php");
+	}
+	
+	$acc_type = "";
+	
+	if(R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']])->type == 'male') {
+		if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['unique_id']) {
+			$acc_type = "visitor";
+			$acc = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+			$prof = R::findOne('profiles', 'user_id = ?', [$_SESSION['unique_id']]);
+		
+		} else {
+			$acc = R::findOne('users', 'unique_id = ?', [$_GET['id']]);
+			if(isset($acc)){
+				if ($acc->type == 'male') {
+					header("location: /");
+				} else {
+					$acc_type = "person";
+					$prof = R::findOne('profiles', 'user_id = ?', [$_GET['id']]);
+				}
+			} else {
+				header("location: /");
+			}
+		}
+	} else {
+		if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['unique_id']) {
+			header("location: /");
+		} else {
+			$acc = R::findOne('users', 'unique_id = ?', [$_GET['id']]);
+			if(isset($acc)){
+				if ($acc->type == 'female') {
+					header("location: /");
+				} else {
+					$acc_type = "person";
+					$prof = R::findOne('profiles', 'user_id = ?', [$_GET['id']]);
+				}
+			} else {
+				header("location: /");
+			}
+		}
+	}
+  
+	if(isset($_GET['favorite']) && $_GET['favorite'] != '' && $_GET['favorite'] != $_SESSION['unique_id']){
+		$theuser = R::findOne('users', 'unique_id = ?', [$_GET['favorite']]);
+		$visitor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+		if(!empty($theuser) && $theuser->type != $visitor->type){
+			$favs = R::dispense('favorites');
+			$favs->user_id = $_SESSION['unique_id'];
+			$favs->fav_id = $_GET['favorite'];
+			R::store($favs);
+			header("location: /favorites");
+		}
+	}
+	
+?>
+
 <?php include_once "tml/header.php"; ?>
 	
 	<main class="bg-light">
 		<div class="container-fluid p-3">
 			<div class="row">
-				<div class="col-lg-2 col-sm-0">
-					
-				</div>
+				<div class="col-lg-2 col-sm-0"></div>
 				<div class="col-lg-2 col-md-6 col-sm-6 mb-md-0">
 					<img class="img-fluid soft-shadow" src="https://i.pinimg.com/736x/28/42/c9/2842c9d941fc16ca9e0f34d148c1c33c.jpg">
 				</div>
 				<div class="d-flex flex-column col-lg-5 col-sm-6">
 					<div class="container">
-						<h1>Sofinjo <a href=# class="text-decoration-none icon-star-empty text-warning" title="Add to favorites"></a></h1>
-						<p>Profile ID: 88005553535</p>
+						<h1><?php echo $acc->nickname; ?> <?php if($acc_type == 'person') echo '<a href=?favorite='.$acc->unique_id.' class="text-decoration-none icon-star-empty text-warning" title="Add to favorites"></a>'; ?></h1>
+						<p>Profile ID: <?php echo $acc->unique_id; ?></p>
 					</div>
-					<div class="container-fluid soft-shadow p-0 bg-white">
-						<!--<table class="table container-fluid profile-table">
-							<tr class="table-light">
-								<th><h4><b>Bio</b></h4></th>
-								<th></th>
-								<th></th>
-							</tr>
-							<tr>
-								<td>
-									<b>Name</b>
-									<p>Sofia</p>
-								</td>
-								<td>
-									<b>Birthday</b>
-									<p>Jun 23, 2001</p>
-								</td>
-								<td>
-									<b>Marital status</b>
-									<p>Single</p>
-								</td>
-							</tr>
-							<tr class="table-light">
-								<td>
-									<b>Country</b>
-									<p>Ukraine</p>
-								</td>
-								<td>
-									<b>City</b>
-									<p>Kiyv</p>
-								</td>
-								<td>
-									<b>Field of work</b>
-									<p>Not specified</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<b>English level</b>
-									<p>Intermediate</p>
-								</td>
-								<td>
-									<b>Languages</b>
-									<p>Not specified</p>
-								</td>
-							</tr>
-						</table>-->
+					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
 						<div class="d-flex flex-wrap">
 							<div class="col-12 container p-3 bg-light">
 								<h4><b>Bio</b></h4>
@@ -67,73 +82,69 @@
 							<div class="col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Name</b>
-									<p>Sofia</p>
+									<p><?php echo $acc->name; ?></p>
 								</div>
 							</div>
 							<div class="col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Birthday</b>
-									<p>Jun 23, 2001</p>
+									<p><?php echo $prof->birthday; ?></p>
 								</div>
 							</div>
 							<div class="col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Marital status</b>
-									<p>Single</p>
+									<p><?php if($prof->marital != '') echo $prof->marital; else echo '-'; ?></p>
 								</div>
 							</div>
 							<div class="col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Country</b>
-									<p>Ukraine</p>
+									<p><?php if($prof->country != '') echo $prof->country; else echo '-'; ?></p>
 								</div>
 							</div>
 							<div class="col-lg-4 col-sm-6">
 								<div class="container py-2">
-									<b>City</b>
-									<p>Kiyv</p>
-								</div>
-							</div>
-							<div class="col-lg-4 col-sm-6">
-								<div class="container py-2">
-									<b>Field of work</b>
-									<p>Not specified</p>
-								</div>
-							</div>
-							<div class="col-lg-4 col-sm-6">
-								<div class="container py-2">
-									<b>English level</b>
-									<p>Intermediate</p>
-								</div>
-							</div>
-							<div class="col-lg-4 col-sm-6">
-								<div class="container py-2">
-									<b>Languages</b>
-									<p>Not specified</p>
+									<b>Color of hair</b>
+									<p><?php if($prof->haircolor != '') echo $prof->haircolor; else echo '-'; ?></p>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="container-fluid soft-shadow p-0 mt-4 bg-white">
-						<table class="table container-fluid profile-table">
-							<tr class="table-light">
-								<th><h4><b>About me</b></h4></th>
-							</tr>
-							<tr>
-								<td>
-									<p style="text-indent: 25px">Tuje foren falsi tc dev, int morgaŭa malebligi esceptinte de. Fin ba hieraŭo oktiliono centilitro, ali sama log'o ed. Ant samo vivui difina nv, ut nek plua apude egalas. Tri am simil elparolo esperanteca, it trae tiaĵo morgaŭo kuo, ha men hebrea asterisko gingivalo. Mega sekse parentezo to nur. I kuzo hura triangulo nea, ju kuzo devus itismo dis.</p>
-								</td>
-							</tr>
-						</table>
+					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
+						<div class="d-flex flex-wrap">
+							<div class="col-12 container p-3 bg-light">
+								<h4><b>About me</b></h4>
+							</div>
+							<div class="col-12">
+								<div class="container py-2">
+									<p style="text-indent: 25px"><?php if($prof->about != '') echo $prof->about; else echo 'Nothing yet'; ?></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
+						<div class="d-flex flex-wrap">
+							<div class="col-12 container p-3 bg-light">
+								<h4><b>Wishes</b></h4>
+							</div>
+							<div class="col-12">
+								<div class="container py-2">
+									<p style="text-indent: 25px"><?php if($prof->wishes != '') echo $prof->wishes; else echo 'Nothing yet'; ?></p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-sm-12 d-flex flex-column">
-					<div class="container soft-shadow p-3 bg-white">
-						<p>Your profile</p>
-						<p><a class="link s-nav text-decoration-none" href=#>Settings</a></p>
-						<p><a class="link s-nav text-decoration-none" href=#>Log out</a></p>
-					</div>
-				</div>
+				<?php if($acc_type == "visitor"){echo 
+					'<div class="col-lg-3 col-sm-12 d-flex flex-column">
+						<div class="container soft-shadow p-3 bg-white">
+							<p><b>Your profile</b></p>
+							<p><a class="link s-nav text-decoration-none" href=#>Settings</a></p>
+							<p><a class="link s-nav text-decoration-none" href=#>Log out</a></p>
+						</div>
+					</div>'
+				;} ?>
 			</div>
 		</div>
 	</main>

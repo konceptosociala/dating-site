@@ -17,15 +17,19 @@
 			  <div class="error-text text-center pb-2"></div>
 			  <div class="input-group mb-3 field input">
 			    <span class="input-group-text" id="basic-addon1">First Name</span>
-			    <input type="text" name="fname" class="form-control" placeholder="Enter your first name" aria-label="First name" aria-describedby="basic-addon1" required>
+			    <input type="text" name="name" class="form-control" placeholder="Enter your first name" aria-label="First name" aria-describedby="basic-addon1" required>
 			  </div>
 			  <div class="input-group mb-3 field input">
-			    <span class="input-group-text" id="basic-addon1">Last Name</span>
-			    <input type="text" name="lname" class="form-control" placeholder="Enter your last name" aria-label="Last name" aria-describedby="basic-addon1" required>
+			    <span class="input-group-text" id="basic-addon1">Nickname</span>
+			    <input type="text" name="nickname" class="form-control" placeholder="Enter your nickname" aria-label="Last name" aria-describedby="basic-addon1" required>
 			  </div>
 			  <div class="input-group mb-3 field input">
 			    <span class="input-group-text" id="basic-addon1">Email</span>
 			    <input type="email" name="email" class="form-control" placeholder="Enter your email" aria-label="Email" aria-describedby="basic-addon1" required>
+			  </div>
+			  <div class="input-group mb-3 field input">
+			    <span class="input-group-text" id="basic-addon1">Birthdate</span>
+			    <input type="date" name="birthday" class="form-control" placeholder="Enter your email" aria-label="Email" aria-describedby="basic-addon1" required>
 			  </div>
 			  <div class="input-group mb-3 field input">
 			    <span class="input-group-text" id="basic-addon1">Password</span>
