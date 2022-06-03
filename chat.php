@@ -11,17 +11,15 @@
       <header>
         <?php 
           $user_id = mysqli_real_escape_string($conn, $_GET['user_id']);
-          $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$user_id}");
-          if(mysqli_num_rows($sql) > 0){
-            $row = mysqli_fetch_assoc($sql);
-          }else{
-            header("location: users.php");
+          $user = R::findOne('users', 'unique_id = ? AND type = "female"', [$user_id]);
+          if(!isset($user)) {
+            header("location: /");
           }
         ?>
-        <img src="php/images/<?php echo $row['img']; ?>" alt="">
+        <img src="php/images/<?php echo $user['img']; ?>" alt="">
         <div class="details">
-          <span><?php echo $row['fname']. " " . $row['lname'] ?></span>
-          <p><?php echo $row['status']; ?></p>
+          <span><?php echo $user['fname']. " " . $user['lname'] ?></span>
+          <p><?php echo $user['status']; ?></p>
         </div>
       </header>
       <div class="chat-box">
