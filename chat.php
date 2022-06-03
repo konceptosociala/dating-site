@@ -11,8 +11,7 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
   <div class="wrapper d-flex flex-column col-lg-4 col-md-6 col-sm-12 m-auto">	
       <header class="d-flex">
         <?php 
-          $user_id = mysqli_real_escape_string($conn, $_GET['user_id']);
-          $user = R::findOne('users', 'unique_id = ? AND type = "female"', [$user_id]);
+          $user = R::findOne('users', 'unique_id = ? AND type = "female"', [$_GET['id']]);
           if(!isset($user)) {
             header("location: /");
           }
@@ -24,10 +23,9 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
         </div>
       </header>
       <div class="chat-box" style="overflow-y: scroll">
-1
       </div>
       <form action="#" class="typing-area p-3 pb-2">
-        <input type="text" class="incoming_id" name="incoming_id" value="<?php echo $user_id; ?>" hidden>        
+        <input type="text" class="incoming_id" name="incoming_id" value="<?php echo $_GET['id']; ?>" hidden>        
         <div class="input-group mb-3" data-emojiarea data-type="unicode" data-global-picker="true">
 		  <a class="btn btn-outline-danger emoji emoji-smile emoji-button" id="button-addon2"><i class="icon-smile"></i></a>
 		  <a class="btn btn-outline-danger" id="button-addon2" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?"><i class="icon-sticky-note"></i></a>

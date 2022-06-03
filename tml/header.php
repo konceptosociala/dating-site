@@ -28,12 +28,8 @@
 				  <li class="nav-item">
 					<a class="nav-link text-light" href="/favorites"><i class="icon-heart"></i> Favorites</a>
 				  </li>
-				</ul>
-			</div>
-			<div class="collapse navbar-collapse justify-content-right" id="navcont">
-				<ul class="navbar-nav">
 				  <li class="nav-item">
-					<a class="nav-link text-light" href="/profile"><i class="icon-heart"></i> Profile</a>
+					<a class="nav-link text-light" href="/profile"><i class="icon-user"></i> Profile</a>
 				  </li>
 				</ul>
 			</div>

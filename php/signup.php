@@ -34,7 +34,7 @@
 								$new_img_name = $time.$img_name;
 								if(move_uploaded_file($tmp_name,"images/".$new_img_name)){
 									$ran_id = rand(time(), 100000000);
-									$status = "Active now";
+									$status = "Online";
 									$encrypt_pass = md5($password);
 									
 									$users_t = R::dispense('users');

@@ -1,5 +1,5 @@
 <?php 
-
+ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	include 'php/config.php';
 
 	session_start();
@@ -45,17 +45,20 @@
 			}
 		}
 	}
-  
+	
 	if(isset($_GET['favorite']) && $_GET['favorite'] != '' && $_GET['favorite'] != $_SESSION['unique_id']){
-		$theuser = R::findOne('users', 'unique_id = ?', [$_GET['favorite']]);
-		$visitor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
-		if(!empty($theuser) && $theuser->type != $visitor->type){
-			$favs = R::dispense('favorites');
-			$favs->user_id = $_SESSION['unique_id'];
-			$favs->fav_id = $_GET['favorite'];
-			R::store($favs);
-			header("location: /favorites");
+		$checkuser = R::findOne('favorites', 'fav_id = ?', [$_GET['favorite']]);
+		if(!isset($checkuser)){
+			$theuser = R::findOne('users', 'unique_id = ?', [$_GET['favorite']]);
+			$visitor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+			if(!empty($theuser) && $theuser->type != $visitor->type){
+				$favs = R::dispense('favorites');
+				$favs->user_id = $_SESSION['unique_id'];
+				$favs->fav_id = $_GET['favorite'];
+				R::store($favs);
+			}
 		}
+		header("location: /favorites");
 	}
 	
 ?>
