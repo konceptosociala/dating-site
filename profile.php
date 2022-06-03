@@ -61,6 +61,9 @@
 							</tr>
 						</table>-->
 						<div class="d-flex flex-wrap">
+							<div class="col-12 container p-3 bg-light">
+								<h4><b>Bio</b></h4>
+							</div>
 							<div class="col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Name</b>
@@ -127,8 +130,8 @@
 				<div class="col-lg-3 col-sm-12 d-flex flex-column">
 					<div class="container soft-shadow p-3 bg-white">
 						<p>Your profile</p>
-						<p><a class="link-primary text-decoration-none" href=#>Settings</a></p>
-						<p><a class="link-primary text-decoration-none" href=#>Log out</a></p>
+						<p><a class="link s-nav text-decoration-none" href=#>Settings</a></p>
+						<p><a class="link s-nav text-decoration-none" href=#>Log out</a></p>
 					</div>
 				</div>
 			</div>

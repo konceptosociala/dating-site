@@ -1,4 +1,6 @@
 <?php
+	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+	
     session_start();
     include_once "config.php";
     $fname = mysqli_real_escape_string($conn, $_POST['fname']);
@@ -7,8 +9,8 @@
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     if(!empty($fname) && !empty($lname) && !empty($email) && !empty($password)){
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-            $sql = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}'");
-            if(mysqli_num_rows($sql) > 0){
+			$with_mail = R::find( 'users', ' email = ? ', [ $email ] );			
+            if(!empty($with_mail)){
                 echo "$email - This email already exist!";
             }else{
                 if(isset($_FILES['image'])){
@@ -29,9 +31,18 @@
                                 $ran_id = rand(time(), 100000000);
                                 $status = "Active now";
                                 $encrypt_pass = md5($password);
-                                $insert_query = mysqli_query($conn, "INSERT INTO users (unique_id, fname, lname, email, password, img, status)
-                                VALUES ({$ran_id}, '{$fname}','{$lname}', '{$email}', '{$encrypt_pass}', '{$new_img_name}', '{$status}')");
-                                if($insert_query){
+                                
+                                $users_t = R::dispense('users');
+                                $users_t->unique_id = $ran_id;
+                                $users_t->fname = $fname;
+                                $users_t->lname = $lname;
+                                $users_t->email = $email;
+                                $users_t->password = $encrypt_pass;
+                                $users_t->img = $new_img_name;
+                                $users_t->status = $status;
+                                
+                                $success_id = R::store($users_t);
+                                if(isset($success_id) && $success_id != 0){
                                     $select_sql2 = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}'");
                                     if(mysqli_num_rows($select_sql2) > 0){
                                         $result = mysqli_fetch_assoc($select_sql2);

@@ -23,7 +23,7 @@
 					<a class="nav-link text-light" href="/"><i class="icon-search"></i> Search</a>
 				  </li>
 				  <li class="nav-item">
-					<a class="nav-link text-light" href="/chat"><i class="icon-chat"></i> Chat</a>
+					<a class="nav-link text-light" href="/users"><i class="icon-chat"></i> Chat</a>
 				  </li>
 				  <li class="nav-item">
 					<a class="nav-link text-light" href="/favorites"><i class="icon-heart"></i> Favorites</a>
