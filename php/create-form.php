@@ -68,7 +68,7 @@
 							$girl->unique_id = $ran_id;
 							$girl->type = "female";
 							$girl->confirm = true;
-							$girl->status = "Active now";
+							$girl->status = "Online";
 							$girl->email = $email;
 							$girl->password = md5($passwd);
 							$girl->img = $new_img_name;
