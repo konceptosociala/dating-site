@@ -4,6 +4,11 @@
   if(!isset($_SESSION['unique_id'])){
     header("location: login.php");
   }
+  
+  $checkmail = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+  if($checkmail->confirm == false) {
+	header("location: /");
+  }
 ?>
 <?php include_once "tml/header.php"; ?>
 <div class="row" style="height:80% !important">

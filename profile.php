@@ -117,7 +117,7 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 							<div class="col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Email</b>
-									<p><?php if($prof->haircolor != '') echo $prof->haircolor; else echo '-'; ?></p>
+									<p><?php if($acc->confirm == true) echo 'Confirmed'; else echo 'Not confirmed'; ?></p>
 								</div>
 							</div>
 						</div>

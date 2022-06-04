@@ -19,22 +19,22 @@
 			<hr>
 			<ul class="nav nav-pills flex-column" style="height: 100vh !important">
 				<li class="nav-item" role="presentation">
-					<a href="#" class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard-tab-pane" type="button" role="tab" aria-controls="dashboard-tab-pane" aria-selected="true">
+					<a href="#dashboard" class="nav-link active nav-tab-db" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard-tab-pane" type="button" role="tab" aria-controls="dashboard-tab-pane" aria-selected="true">
 						<i class="icon-gauge-1"></i> Dashboard
 					</a>
 				</li>
 				<li class="nav-item" role="presentation">
-					<a href="#" class="nav-link" id="clients-tab" data-bs-toggle="tab" data-bs-target="#clients-tab-pane" type="button" role="tab" aria-controls="clients-tab-pane" aria-selected="true">
+					<a href="#clients" class="nav-link nav-tab-cl" id="clients-tab" data-bs-toggle="tab" data-bs-target="#clients-tab-pane" type="button" role="tab" aria-controls="clients-tab-pane" aria-selected="true">
 						<i class="icon-male"></i> Clients
 					</a>
 				</li>
 				<li class="nav-item" role="presentation">
-					<a href="#" class="nav-link" id="accounts-tab" data-bs-toggle="tab" data-bs-target="#accounts-tab-pane" type="button" role="tab" aria-controls="accounts-tab-pane" aria-selected="true">
+					<a href="#accounts" class="nav-link nav-tab-ac" id="accounts-tab" data-bs-toggle="tab" data-bs-target="#accounts-tab-pane" type="button" role="tab" aria-controls="accounts-tab-pane" aria-selected="true">
 						<i class="icon-female"></i> Accounts
 					</a>
 				</li>
 				<li class="nav-item" role="presentation">
-					<a href="#" class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-tab-pane" type="button" role="tab" aria-controls="reviews-tab-pane" aria-selected="true">
+					<a href="#reviews" class="nav-link nav-tab-rv" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-tab-pane" type="button" role="tab" aria-controls="reviews-tab-pane" aria-selected="true">
 						<i class="icon-commenting"></i> Reviews
 					</a>
 				</li>
@@ -58,12 +58,10 @@
 						<div class="input-group mb-3">
 						    <span class="input-group-text" id="basic-addon1">Oleksandra, 21</span>
 							<button class="btn btn-warning">Edit</button>
-							<button class="btn btn-success">Chat</button>
 						</div>
 						<div class="input-group mb-3">
 						    <span class="input-group-text" id="basic-addon1">Oleksandra, 21</span>
 							<button class="btn btn-warning">Edit</button>
-							<button class="btn btn-success">Chat</button>
 						</div>
 					</div>
 				</div>
@@ -80,5 +78,81 @@
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
 </script><script src="dashboard/dashboard.js"></script>
+<script>
+	process_hash();
+
+	$('.nav-tab-db').click(function() {
+		window.location.hash = "dashboard";
+	});
+	
+	$('.nav-tab-cl').click(function() {
+		window.location.hash = "clients";
+	});
+	
+	$('.nav-tab-ac').click(function() {
+		window.location.hash = "accounts";
+	});
+	
+	$('.nav-tab-rv').click(function() {
+		window.location.hash = "reviews";
+	});
+	
+	$(window).bind( 'hashchange', function(e) {
+		process_hash();
+	});	
+		
+	function process_hash() {
+		switch(window.location.hash) {
+			case "#dashboard":
+				$('#dashboard-tab-pane').attr("class", "tab-pane fade show active");
+				$('#clients-tab-pane').attr("class", "tab-pane fade");
+				$('#accounts-tab-pane').attr("class", "tab-pane fade");
+				$('#reveiews-tab-pane').attr("class", "tab-pane fade");
+				
+				$('#dashboard-tab').attr("class", "nav-link active nav-tab-db");
+				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
+				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
+				$('#reveiews-tab').attr("class", "nav-link nav-tab-rv");
+				break;
+			
+			case "#clients":
+				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
+				$('#clients-tab-pane').attr("class", "tab-pane fade show active");
+				$('#accounts-tab-pane').attr("class", "tab-pane fade");
+				$('#reviews-tab-pane').attr("class", "tab-pane fade");
+				
+				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
+				$('#clients-tab').attr("class", "nav-link nav-tab-cl active");
+				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
+				$('#reveiews-tab').attr("class", "nav-link nav-tab-rv");
+				break;
+			
+			case "#accounts":
+				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
+				$('#clients-tab-pane').attr("class", "tab-pane fade");
+				$('#accounts-tab-pane').attr("class", "tab-pane fade show active");
+				$('#reviews-tab-pane').attr("class", "tab-pane fade");
+				
+				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
+				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
+				$('#accounts-tab').attr("class", "nav-link nav-tab-ac active");
+				$('#reveiews-tab').attr("class", "nav-link nav-tab-rv");
+				break;
+			
+			case "#reviews":
+				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
+				$('#clients-tab-pane').attr("class", "tab-pane fade");
+				$('#accounts-tab-pane').attr("class", "tab-pane fade");
+				$('#reviews-tab-pane').attr("class", "tab-pane fade show active");
+				
+				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
+				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
+				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
+				$('#reveiews-tab').attr("class", "nav-link nav-tab-rv active");
+				break;		
+		}
+	}
+
+</script>
 </body>
 </html>
