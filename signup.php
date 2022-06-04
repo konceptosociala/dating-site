@@ -34,10 +34,15 @@
 				<select name="country" class="form-control" aria-label="Country" aria-describedby="basic-addon1" required>
 				  <option disabled selected></option>
 				  <option disabled>-- Select country --</option>
-				  <option>Ukraine</option>
-				  <option>USA</option>
-				  <option>Moldova</option>
-				  <option>Spain</option>
+					<?php
+							
+						$countries = file_get_contents('countries.txt');
+						$arr = explode("\n", $countries);
+						for($i = 0; $i < count($arr) - 1; $i++) {
+							echo '<option>'.$arr[$i].'</option>';
+						}
+							
+					?>
 				</select>
 			  </div>
 			  <div class="input-group mb-3 field input">
