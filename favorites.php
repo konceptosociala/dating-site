@@ -50,12 +50,12 @@
 							<div class="d-flex"><h5 class="card-title">'.$acc->name.', '.$diff->y.'</h5><a href="?remove-favorite='.$acc->unique_id.'" class="btn btn-close ms-auto"></a></div>
 							'.$status.'
 						</div>
-						<a title="Start chatting with '.$acc->name.'" href="chat?id='.$acc->unique_id.'"><div class="card-field" style="background-image: url(php/images/'.$acc->img.')">
+						<a title="Start chatting with '.$acc->name.'" href="profile?id='.$acc->unique_id.'"><div class="card-field" style="background-image: url(php/images/'.$acc->img.')">
 							&nbsp;
 						</div></a>
+						<a href="chat?id='.$acc->unique_id.'" class="btn btn-success" style="border-radius: 0 0 5px 5px">Chat</a>
 					</div>
 				</div>
-				
 				';
 			}
 			

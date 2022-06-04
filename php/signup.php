@@ -14,7 +14,7 @@
 	$diff = $d2->diff($d1);
     $age = $diff->y;
     if(!empty($name) && !empty($nickname) && !empty($email) && !empty($password) && !empty($country) && !empty($bday)){
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if(filter_var($email, FILTER_VALIDATE_EMAIL) || $email == "viburno@localhost"){
 			$with_mail = R::find( 'users', ' email = ? ', [ $email ] );			
             if(!empty($with_mail)){
                 echo "$email - This email already exist!";
@@ -56,7 +56,7 @@
 									$users_t->img = $new_img_name;
 									$users_t->type = "male";
 									$users_t->status = $status;
-									
+									$users_t->confirm = false;
 									$success_id = R::store($users_t);
 									if(isset($success_id) && $success_id != 0){
 										$select_sql2 = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}'");
@@ -73,15 +73,29 @@
 									
 									$profile = R::dispense('profiles');
 									
-									$profile->user_id = $ran_id;
-									$profile->birthday = $bday;
-									$profile->country = $country;
+									$profile->user_id 	= $ran_id;
+									$profile->birthday 	= $bday;
+									$profile->country 	= $country;
 									$profile->haircolor = "";
-									$profile->marital = "";
-									$profile->about = "";
-									$profile->wishes = "";
-									
+									$profile->marital 	= "";
+									$profile->about 	= "";
+									$profile->wishes 	= "";
 									R::store($profile);
+									
+									$confirm_token = rand(time(), 100000000);
+									$checker = R::dispense('tokens');
+									$checker->user_id = $ran_id;
+									$checker->token = $confirm_token;
+									R::store($checker);
+									
+									$to      = $email;
+									$subject = 'Dating mail confirmation';
+									$message = 'Confirm your account email by the URL: localhost/activate?token='.$confirm_token;
+									$headers = 'From: dating@localhost' . "\r\n" .
+										'Reply-To: dating@localhost' . "\r\n" .
+										'X-Mailer: PHP/' . phpversion();
+
+									mail($to, $subject, $message, $headers);
 								}
 							}else{
 								echo "Please upload an image file - jpeg, png, jpg";

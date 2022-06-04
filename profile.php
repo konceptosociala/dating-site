@@ -114,6 +114,12 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 									<p><?php if($prof->haircolor != '') echo $prof->haircolor; else echo '-'; ?></p>
 								</div>
 							</div>
+							<div class="col-lg-4 col-sm-6">
+								<div class="container py-2">
+									<b>Email</b>
+									<p><?php if($prof->haircolor != '') echo $prof->haircolor; else echo '-'; ?></p>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
