@@ -42,6 +42,5 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 <script src="/javascript/emojiarea/jquery.emojiarea.js"></script>
 <script src="javascript/chat.js"></script>
   
-
 </body>
 </html>

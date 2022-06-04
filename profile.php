@@ -30,7 +30,9 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 		}
 	} else {
 		if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['unique_id']) {
-			header("location: /");
+			$acc_type = "person";
+			$acc = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+			$prof = R::findOne('profiles', 'user_id = ?', [$_SESSION['unique_id']]);
 		} else {
 			$acc = R::findOne('users', 'unique_id = ?', [$_GET['id']]);
 			if(isset($acc)){
@@ -70,7 +72,7 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 			<div class="row">
 				<div class="col-lg-2 col-sm-0"></div>
 				<div class="col-lg-2 col-md-6 col-sm-6 mb-md-0">
-					<img class="img-fluid soft-shadow" src="https://i.pinimg.com/736x/28/42/c9/2842c9d941fc16ca9e0f34d148c1c33c.jpg">
+					<img class="img-fluid soft-shadow" src="php/images/<?php echo $acc->img; ?>">
 				</div>
 				<div class="d-flex flex-column col-lg-5 col-sm-6">
 					<div class="container">
@@ -143,15 +145,33 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 					'<div class="col-lg-3 col-sm-12 d-flex flex-column">
 						<div class="container soft-shadow p-3 bg-white">
 							<p><b>Your profile</b></p>
-							<p><a class="link s-nav text-decoration-none" href=#>Settings</a></p>
+							<p><a href=# class="link s-nav text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+								Settings
+							</a></p>
 							<p><a class="link s-nav text-decoration-none" href=#>Log out</a></p>
 						</div>
 					</div>'
 				;} ?>
 			</div>
 		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			  </div>
+			  <div class="modal-body">
+				...
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
 	</main>
 	
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-  </body>
-</html>
+<?php include 'tml/footer.php' ?>

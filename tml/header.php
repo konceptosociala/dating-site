@@ -20,7 +20,7 @@
 			<div class="collapse navbar-collapse justify-content-center" id="navcont">
 				<ul class="navbar-nav">
 				  <li class="nav-item">
-					<a class="nav-link text-light" href="/"><i class="icon-search"></i> Search</a>
+					<a class="nav-link text-light" data-bs-toggle="tooltip" title="You must fill your profile first!" data-bs-placement="bottom" href="/"><i class="icon-search"></i> Search</a>
 				  </li>
 				  <li class="nav-item">
 					<a class="nav-link text-light" href="/users"><i class="icon-chat"></i> Chat</a>

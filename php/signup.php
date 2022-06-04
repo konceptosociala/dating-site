@@ -2,11 +2,18 @@
 	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     session_start();
     include_once "config.php";
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $nickname = mysqli_real_escape_string($conn, $_POST['nickname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    if(!empty($name) && !empty($nickname) && !empty($email) && !empty($password)){
+    $name = $_POST['name'];
+    $nickname = $_POST['nickname'];
+    $email = $_POST['email'];
+    $password =$_POST['password'];
+    $country = $_POST['country'];
+    $bday = $_POST['birthday'];
+    
+    $d1 = new DateTime(date('y-m-d'));
+	$d2 = new DateTime($bday);
+	$diff = $d2->diff($d1);
+    $age = $diff->y;
+    if(!empty($name) && !empty($nickname) && !empty($email) && !empty($password) && !empty($country) && !empty($bday)){
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 			$with_mail = R::find( 'users', ' email = ? ', [ $email ] );			
             if(!empty($with_mail)){
@@ -17,7 +24,10 @@
 					echo "$nickname - This nickname already exist!";
 				} else if(strlen($nickname) > 20) {
 					echo "$nickname - This nickname is too long!";
+				} else if($age < 18){
+					echo "Entered date is invalid!";
 				} else {
+					
 					if(isset($_FILES['image'])){
 						$img_name = $_FILES['image']['name'];
 						$img_type = $_FILES['image']['type'];
@@ -64,8 +74,8 @@
 									$profile = R::dispense('profiles');
 									
 									$profile->user_id = $ran_id;
-									$profile->birthday = $_POST['birthday'];
-									$profile->country = "";
+									$profile->birthday = $bday;
+									$profile->country = $country;
 									$profile->haircolor = "";
 									$profile->marital = "";
 									$profile->about = "";

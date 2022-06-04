@@ -1,4 +1,5 @@
 <?php 
+  ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
   session_start();
   if(isset($_SESSION['unique_id'])){
     header("location: /");
@@ -16,11 +17,9 @@
 			  <h2 class="text-center pb-2">Registration</h2>	  
 			  <div class="error-text text-center pb-2"></div>
 			  <div class="input-group mb-3 field input">
-			    <span class="input-group-text" id="basic-addon1">First Name</span>
-			    <input type="text" name="name" class="form-control" placeholder="Enter your first name" aria-label="First name" aria-describedby="basic-addon1" required>
-			  </div>
-			  <div class="input-group mb-3 field input">
-			    <span class="input-group-text" id="basic-addon1">Nickname</span>
+			    <span class="input-group-text" id="basic-addon1">Name</span>
+			    <input type="text" name="name" class="form-control" placeholder="Enter your name" aria-label="First name" aria-describedby="basic-addon1" required>
+				<span class="input-group-text" id="basic-addon1">Nickname</span>
 			    <input type="text" name="nickname" class="form-control" placeholder="Enter your nickname" aria-label="Last name" aria-describedby="basic-addon1" required>
 			  </div>
 			  <div class="input-group mb-3 field input">
@@ -30,6 +29,17 @@
 			  <div class="input-group mb-3 field input">
 			    <span class="input-group-text" id="basic-addon1">Birthdate</span>
 			    <input type="date" name="birthday" class="form-control" placeholder="Enter your email" aria-label="Email" aria-describedby="basic-addon1" required>
+			  </div>
+			  <div class="input-group mb-3 field input">
+			    <span class="input-group-text" id="basic-addon1">Country</span>
+				<select name="country" class="form-control" aria-label="Country" aria-describedby="basic-addon1" required>
+				  <option disabled selected></option>
+				  <option disabled>-- Select country --</option>
+				  <option>Ukraine</option>
+				  <option>USA</option>
+				  <option>Moldova</option>
+				  <option>Spain</option>
+				</select>
 			  </div>
 			  <div class="input-group mb-3 field input">
 			    <span class="input-group-text" id="basic-addon1">Password</span>
