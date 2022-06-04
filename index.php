@@ -57,17 +57,6 @@
 	</div>
 	<div class="container mt-3">
 		<div class="row">
-			<div class="col-lg-3 col-md-6 col-sm-12 my-3">
-				<div class="card mx-2">
-					<div class="card-body">
-						<h5 class="card-title">Helena, 21</h5>
-						<p class="card-text text-secondary">Offline</h5>
-					</div>
-					<div class="card-field" style="background-image: url('https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
-						&nbsp;
-					</div>
-				</div>
-			</div>
 			<?php
 						
 				$girls = R::getAll("SELECT * FROM users WHERE type = 'female'");

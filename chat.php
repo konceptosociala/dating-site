@@ -1,30 +1,29 @@
 <?php 
-ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
-  session_start();
-  include_once "php/config.php";
-  if(!isset($_SESSION['unique_id'])){
-    header("location: login.php");
-  }
+	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+	session_start();
+	include_once "php/config.php";
+	if(!isset($_SESSION['unique_id'])){
+		header("location: login.php");
+	}
   
-  $checkmail = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
-  if($checkmail->confirm == false) {
-	header("location: /");
-  }
+	$checkuser = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+	if($checkuser->confirm == false) {
+		header("location: /");
+	}
+	
+	$kunparolanto = R::findOne('users', 'unique_id = ?', [$_GET['id']]);
+	if(!isset($kunparolanto) || $kunparolanto->type == $checkuser->type) {
+		header("location: /");
+    }
 ?>
 <?php include_once "tml/header.php"; ?>
 <div style="height:80% !important">
   <div class="wrapper d-flex flex-column col-lg-4 col-md-6 col-sm-12 m-auto">	
       <header class="d-flex">
-        <?php 
-          $user = R::findOne('users', 'unique_id = ? AND type = "female"', [$_GET['id']]);
-          if(!isset($user)) {
-            header("location: /");
-          }
-        ?>
-        <img class="m-3" width=50 height=50 src="php/images/<?php echo $user['img']; ?>" alt="">
+        <img class="m-3" width=50 height=50 src="php/images/<?php echo $kunparolanto['img']; ?>" alt="">
         <div class="details my-3">
-          <span><?php echo $user['fname']. " " . $user['lname'] ?></span>
-          <p><?php echo $user['status']; ?></p>
+          <span><?php echo $kunparolanto['name']." (".$kunparolanto['nickname'].")"; ?></span>
+          <p><?php echo $kunparolanto['status']; ?></p>
         </div>
       </header>
       <div class="chat-box" style="overflow-y: scroll">

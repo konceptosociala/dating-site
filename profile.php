@@ -9,6 +9,8 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 	
 	$acc_type = "";
 	
+	$vtor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+	
 	if(R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']])->type == 'male') {
 		if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['unique_id']) {
 			$acc_type = "visitor";
@@ -30,18 +32,14 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 		}
 	} else {
 		if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['unique_id']) {
-			$acc_type = "person";
+			$acc_type = "selfgirl";
 			$acc = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
 			$prof = R::findOne('profiles', 'user_id = ?', [$_SESSION['unique_id']]);
 		} else {
 			$acc = R::findOne('users', 'unique_id = ?', [$_GET['id']]);
 			if(isset($acc)){
-				if ($acc->type == 'female') {
-					header("location: /");
-				} else {
-					$acc_type = "person";
-					$prof = R::findOne('profiles', 'user_id = ?', [$_GET['id']]);
-				}
+				$acc_type = "person";
+				$prof = R::findOne('profiles', 'user_id = ?', [$_GET['id']]);
 			} else {
 				header("location: /");
 			}
