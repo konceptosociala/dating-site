@@ -20,7 +20,7 @@
                                 </div>
                                 </div>';
 					} else if($row['msg_type'] == 'sticker') {
-						$output .= 'sticker_OWN';
+						$output .= '<img style="display: block; width: 40%; margin: 15px; margin-left:auto; border-radius: 0" src="'.$row['msg'].'">';
 					} else {
 						$output .= 'image_OWN';
 					}
@@ -36,14 +36,14 @@
 									</div>
 									</div>';
 					} else if($row['msg_type'] == 'sticker') {
-						$output .= 'sticker_ANT';
+						$output .= '<img style="width: 40%; margin: 10px; border-radius: 0" src="'.$row['msg'].'">';
 					} else {
 						$output .= 'image_ANT';
 					}
                 }
             }
         } else {
-            $output .= '<div class="text">No messages found. Start chatting right now!</div>';
+            $output .= '<div class="text text-center m-2">No messages found. Start chatting right now!</div>';
         }
         echo $output;
     }else{

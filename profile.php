@@ -47,7 +47,7 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 	}
 	
 	if(isset($_GET['favorite']) && $_GET['favorite'] != '' && $_GET['favorite'] != $_SESSION['unique_id']){
-		$checkuser = R::findOne('favorites', 'fav_id = ?', [$_GET['favorite']]);
+		$checkuser = R::findOne('favorites', 'fav_id = ? AND user_id = ?', [$_GET['favorite'], $_SESSION['unique_id']]);
 		if(!isset($checkuser)){
 			$theuser = R::findOne('users', 'unique_id = ?', [$_GET['favorite']]);
 			$visitor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
