@@ -79,7 +79,7 @@
 					<div class="col-lg-3 col-md-6 col-sm-12 my-3">
 						<div class="card mx-2">
 							<div class="card-body">
-								<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5><a href="?remove-favorite='.$acc['unique_id'].'" class="btn btn-close ms-auto"></a></div>
+								<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5></div>
 								'.$status.'
 							</div>
 							<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="background-image: url(php/images/'.$acc['img'].')">

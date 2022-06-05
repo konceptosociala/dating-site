@@ -36,8 +36,8 @@
 					</a>
 				</li>
 				<li class="nav-item" role="presentation">
-					<a href="#reviews" class="nav-link nav-tab-rv" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-tab-pane" type="button" role="tab" aria-controls="reviews-tab-pane" aria-selected="true">
-						<i class="icon-commenting"></i> Reviews
+					<a href="#stickers" class="nav-link nav-tab-st" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#stickers-tab-pane" type="button" role="tab" aria-controls="stickers-tab-pane" aria-selected="true">
+						<i class="icon-sticky-note"></i> Stickers
 					</a>
 				</li> 
 			</ul>
@@ -94,8 +94,34 @@
 						?>						
 				</div>
 			</div>
-			<div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="3">
-				4
+			<div class="tab-pane fade" id="stickers-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="3">
+				<h1 class="display-4 text-center m-3">Stickers</h1>
+				<center><button class="btn btn-success btn-lg mb-4" data-bs-toggle="modal" data-bs-target="#stickersModal">+ Add</button></center>
+				<div class="row stickers-div">
+						<?php
+						
+							$sticks = R::getAll("SELECT * FROM stickers");
+							if(empty($sticks)) echo "<center><h3>Stickers not found!</h3></center>";
+							for($i = 0; $i < count($sticks); $i++) {	
+								$stick = $sticks[$i];					
+														
+								echo 
+								'
+								<div id="remove-stick-'.$stick['name'].'" class="col-lg-4 col-md-6 col-sm-12 my-3 girl-card">
+									<div class="card mx-2">
+										<div class="card-body">
+											<div class="d-flex"><h5 class="card-title">'.$stick['name'].'</h5><button onclick="remove_sticker(\''.$stick['name'].'\')" class="btn btn-close ms-auto"></button></div>
+										</div>
+										<div class="card-field p-3" style="border-radius: 0;">
+											<center><img style="object-fit: containt; max-height: 275px" src="php/images/stickers/'.$stick['img'].'" class="img-fluid"></center>
+										</div>
+									</div>
+								</div>
+								';
+							}	
+						
+						?>
+				</div>
 			</div>
 		</div>
 		<!-- Create Modal -->
@@ -238,6 +264,31 @@
 				</form>
 			</div>
 		</div>
+		<!-- Stickers Modal -->
+		<div class="modal fade" id="stickersModal" tabindex="-1" aria-labelledby="stickersModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="modal-content sticker-form">
+					<div class="modal-header">
+						<h5 class="modal-title" id="stickersModalLabel">Stickers</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="input-group mb-3 field input">
+							<span class="input-group-text" id="basic-addon1">Name</span>
+							<input type=text name="sticker-name" class="form-control" aria-label="Name" aria-describedby="basic-addon1" required>
+						</div>
+						<div class="input-group mb-3 field input">
+							<span class="input-group-text" id="basic-addon1">Image</span>
+							<input type=file name="sticker-file" class="form-control" aria-label="Image" aria-describedby="basic-addon1" required>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-success">Add</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</main>
 </section>
 
@@ -261,8 +312,8 @@
 		window.location.hash = "accounts";
 	});
 	
-	$('.nav-tab-rv').click(function() {
-		window.location.hash = "reviews";
+	$('.nav-tab-st').click(function() {
+		window.location.hash = "stickers";
 	});
 	
 	$(window).bind( 'hashchange', function(e) {
@@ -275,48 +326,48 @@
 				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
 				$('#clients-tab-pane').attr("class", "tab-pane fade show active");
 				$('#accounts-tab-pane').attr("class", "tab-pane fade");
-				$('#reviews-tab-pane').attr("class", "tab-pane fade");
+				$('#stickers-tab-pane').attr("class", "tab-pane fade");
 				
 				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
 				$('#clients-tab').attr("class", "nav-link nav-tab-cl active");
 				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
-				$('#reveiews-tab').attr("class", "nav-link nav-tab-rv");
+				$('#stickers-tab').attr("class", "nav-link nav-tab-st");
 				break;
 			
 			case "#accounts":
 				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
 				$('#clients-tab-pane').attr("class", "tab-pane fade");
 				$('#accounts-tab-pane').attr("class", "tab-pane fade show active");
-				$('#reviews-tab-pane').attr("class", "tab-pane fade");
+				$('#stickers-tab-pane').attr("class", "tab-pane fade");
 				
 				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
 				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
 				$('#accounts-tab').attr("class", "nav-link nav-tab-ac active");
-				$('#reveiews-tab').attr("class", "nav-link nav-tab-rv");
+				$('#stickers-tab').attr("class", "nav-link nav-tab-st");
 				break;
 			
-			case "#reviews":
+			case "#stickers":
 				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
 				$('#clients-tab-pane').attr("class", "tab-pane fade");
 				$('#accounts-tab-pane').attr("class", "tab-pane fade");
-				$('#reviews-tab-pane').attr("class", "tab-pane fade show active");
+				$('#stickers-tab-pane').attr("class", "tab-pane fade show active");
 				
 				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
 				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
 				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
-				$('#reveiews-tab').attr("class", "nav-link nav-tab-rv active");
+				$('#stickers-tab').attr("class", "nav-link nav-tab-st active");
 				break;		
 				
 			default:
 				$('#dashboard-tab-pane').attr("class", "tab-pane fade show active");
 				$('#clients-tab-pane').attr("class", "tab-pane fade");
 				$('#accounts-tab-pane').attr("class", "tab-pane fade");
-				$('#reveiews-tab-pane').attr("class", "tab-pane fade");
+				$('#stickers-tab-pane').attr("class", "tab-pane fade");
 				
 				$('#dashboard-tab').attr("class", "nav-link active nav-tab-db");
 				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
 				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
-				$('#reveiews-tab').attr("class", "nav-link nav-tab-rv");
+				$('#stickers-tab').attr("class", "nav-link nav-tab-st");
 				break;
 		}
 	}
@@ -331,7 +382,22 @@
 			cache: false,
 			processData: false,
             success: function(response){
-                alert(response);
+                $('.girl-cards-div').append(response);
+			}
+		});
+    });
+    
+	$('.sticker-form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: 'php/sticker-form.php',
+            data:  new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+            success: function(response){
+                $('.stickers-div').append(response);
 			}
 		});
     });
@@ -357,13 +423,13 @@
     });
     
     function remove_user(id) {
-		$('#remove' + id).remove();
 		$.ajax({
             type: "POST",
             url: 'php/remove-user.php',
             data: {id: id},
             success: function(response){
                 alert(response);
+                $('#remove' + id).remove();
 			}
 		});
 	}
@@ -391,6 +457,18 @@
 			},
 			error: function() {
 				alert('Error!');
+			}
+		});
+	}
+	
+	function remove_sticker(name) {
+		$.ajax({
+            type: "POST",
+            url: 'php/remove-sticker.php',
+            data: {stickname: name},
+            success: function(response){
+                alert(response);
+                $('#remove-stick-' + name).remove();
 			}
 		});
 	}

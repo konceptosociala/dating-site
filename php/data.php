@@ -15,7 +15,8 @@
         ($outgoing_id == $row['unique_id']) ? $hid_me = "hide" : $hid_me = "";
 
 		if ($row2){
-			$output .= '<a style="text-decoration: none" href="chat.php?id='. $row['unique_id'] .'">
+			if($row2[0]['msg_type'] == 'text') {
+				$output .= '<a style="text-decoration: none" href="chat.php?id='. $row['unique_id'] .'">
 						<div class="content">
 						<img src="php/images/'. $row['img'] .'" alt="">
 						<div class="details">
@@ -25,6 +26,29 @@
 						</div>
 						<div class="status-dot '. $offline .'"><i class="fas fa-circle"></i></div>
 					</a>';
+			} else if($row2[0]['msg_type'] == 'sticker') {
+				$output .= '<a style="text-decoration: none" href="chat.php?id='. $row['unique_id'] .'">
+						<div class="content">
+						<img src="php/images/'. $row['img'] .'" alt="">
+						<div class="details">
+							<span>'. $row['name']. " (" . $row['nickname'] .')</span>
+							<p>'. $you .'STICKER</p>
+						</div>
+						</div>
+						<div class="status-dot '. $offline .'"><i class="fas fa-circle"></i></div>
+					</a>';
+			} else {
+				$output .= '<a style="text-decoration: none" href="chat.php?id='. $row['unique_id'] .'">
+						<div class="content">
+						<img src="php/images/'. $row['img'] .'" alt="">
+						<div class="details">
+							<span>'. $row['name']. " (" . $row['nickname'] .')</span>
+							<p>'. $you . 'IMAGE</p>
+						</div>
+						</div>
+						<div class="status-dot '. $offline .'"><i class="fas fa-circle"></i></div>
+					</a>';
+			}
         }
     }
 ?>

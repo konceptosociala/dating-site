@@ -152,7 +152,7 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 							<p><a href=# class="link s-nav text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
 								Settings
 							</a></p>
-							<p><a class="link s-nav text-decoration-none" href=#>Log out</a></p>
+							<p><a class="link s-nav text-decoration-none" href="php/logout.php?logout_id='.$acc['unique_id'].'">Log out</a></p>
 						</div>
 					</div>'
 				;} ?>

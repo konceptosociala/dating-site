@@ -1,5 +1,5 @@
 <?php 
-ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+
     session_start();
     if(isset($_SESSION['unique_id'])){
         include_once "config.php";
@@ -13,21 +13,33 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 			for($ir = 0; $ir < count($sql); $ir++){
 				$row = $sql[$ir];
                 if($row['outgoing_msg_id'] === $outgoing_id){
-                    $output .= '<div class="chat outgoing">
+                    if($row['msg_type'] == 'text') {
+						$output .= '<div class="chat outgoing">
                                 <div class="details">
                                     <p>'. $row['msg'] .'</p>
                                 </div>
                                 </div>';
-                }else{
-                    $output .= '<div class="chat incoming">
-                                <img src="php/images/'.$row['img'].'" alt="">
-                                <div class="details">
-                                    <p>'. $row['msg'] .'</p>
-                                </div>
-                                </div>';
+					} else if($row['msg_type'] == 'sticker') {
+						$output .= 'sticker_OWN';
+					} else {
+						$output .= 'image_OWN';
+					}
+                } else {
+					if($row['msg_type'] == 'text') {
+						$output .= '<div class="chat incoming">
+									<img src="php/images/'.$row['img'].'" alt="">
+									<div class="details">
+										<p>'. $row['msg'] .'</p>
+									</div>
+									</div>';
+					} else if($row['msg_type'] == 'sticker') {
+						$output .= 'sticker_ANT';
+					} else {
+						$output .= 'image_ANT';
+					}
                 }
             }
-        }else{
+        } else {
             $output .= '<div class="text">No messages found. Start chatting right now!</div>';
         }
         echo $output;

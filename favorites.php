@@ -54,7 +54,7 @@
 								<div class="d-flex"><h5 class="card-title">'.$acc->name.', '.$diff->y.'</h5><a href="?remove-favorite='.$acc->unique_id.'" class="btn btn-close ms-auto"></a></div>
 								'.$status.'
 							</div>
-							<a title="View profile of '.$acc->name.'" href="profile?id='.$acc->unique_id.'"><div class="card-field" style="background-image: url(php/images/'.$acc->img.')">
+							<a title="View profile of '.$acc->name.'" href="profile?id='.$acc->unique_id.'"><div class="card-field" style="background-image: url(php/images/'.$acc->img.'); border-radius: 0">
 								&nbsp;
 							</div></a>
 							<a href="chat?id='.$acc->unique_id.'" class="btn btn-success" style="border-radius: 0 0 5px 5px">Chat</a>
