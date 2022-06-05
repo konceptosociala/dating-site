@@ -22,7 +22,7 @@
 			<?php 
 			
 			if(isset($_GET['remove-favorite'])){
-				$deluser = R::findOne('favorites', 'fav_id = ?', [$_GET['remove-favorite']]);
+				$deluser = R::findOne('favorites', 'fav_id = ? && user_id = ?', [$_GET['remove-favorite'], $_SESSION['unique_id']]);
 				if(isset($deluser)){
 					R::trash($deluser);
 				}
