@@ -26,10 +26,13 @@
 					}
                 } else {
 					if($row['msg_type'] == 'text') {
-						$output .= '<div class="chat incoming">
-									<img src="php/images/'.$row['img'].'" alt="">
+						$output .= '<div class="d-flex align-items-end m-2">
+									<img class="chat-img" src="php/images/'.$row['img'].'" alt="">
+									<div class="chat incoming">
+									
 									<div class="details">
 										<p>'. $row['msg'] .'</p>
+									</div>
 									</div>
 									</div>';
 					} else if($row['msg_type'] == 'sticker') {

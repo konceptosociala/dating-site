@@ -83,8 +83,8 @@
             type: "POST",
             url: 'php/send-sticker.php',
             data: {stickname: name, ant_userid: <?php echo $_SESSION['unique_id']; ?>, at_userid: <?php echo $_GET['id']; ?>},
-            success: function(response){
-                alert(response);
+            success: function(){
+                
 			}
 		});
 	}

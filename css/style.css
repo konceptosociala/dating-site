@@ -158,25 +158,29 @@
 }
 
 .chat-box {
-	background: palegreen;
+	background: #cfc0c0;
 	height: 60vh;
 }
 
 .chat {
-	width: 45%;
+	width: 55%;
 	padding: 10px;
-	margin: 5px;
+	margin: 10px;
+	font-size: 14px;
 }
 
 .incoming {
-	background: red;
+	background: #efe0e0;
+	border-radius: 20px 20px 20px 0;
 }
 
 .outgoing {
-	background: blue;
+	background: #fff0f0;
+	border-radius: 20px 20px 0 20px;
+	margin-left: auto;
 }
 
-.chat img {
+.chat-img {
 	width:50px;
 	height:50px;
 }
