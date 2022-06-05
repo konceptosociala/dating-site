@@ -1,0 +1,74 @@
+<?php
+	session_start();
+	require 'config.php';
+
+	if(
+		isset($_POST['name']) &&
+		isset($_POST['nickname']) &&
+		isset($_POST['birthday']) &&
+		isset($_POST['country'])
+	){	
+		$with_nick = R::find( 'users', ' nickname = ? AND NOT unique_id = ?', [$_POST['nickname'], $_SESSION['unique_id']] );	
+		
+		$d1 = new DateTime(date('y-m-d'));
+		$d2 = new DateTime($_POST['birthday']);
+		$diff = $d2->diff($d1);
+						
+		if(!empty($with_nick)){
+			echo '<script>alert("'.$_POST['nickname'].' - This nickname already exist!")</script>';
+		} else if(strlen($_POST['nickname']) > 20) {
+			echo '<script>alert("'.$_POST['nickname'].' - This nickname is too long!")</script>';
+		} else if($diff->y < 18){
+			echo '<script>alert("Entered date is invalid!")</script>';
+		} else {	
+			if(!empty($_FILES['photos']['name'][0])){	
+				$img_name = $_FILES['photos']['name'];
+				$img_type = $_FILES['photos']['type'];
+				$tmp_name = $_FILES['photos']['tmp_name'];		
+				for($i = 0; $i < count($img_name); $i++){
+					$img_explode = explode('.',$img_name[$i]);
+					$img_ext = end($img_explode);
+					
+					$extensions = ["jpeg", "png", "jpg"];
+					if(in_array($img_ext, $extensions) === true){
+						$types = ["image/jpeg", "image/jpg", "image/png"];
+						if(in_array($img_type[$i], $types) === true){
+							$time = time();
+							$new_img_name = $time.$img_name[$i];
+							if(move_uploaded_file($tmp_name[$i],"images/".$new_img_name)){
+								$photos = R::dispense('photos');
+								$photos->img = $new_img_name;
+								$photos->user_id = $_SESSION['unique_id'];
+								R::store($photos);
+							}
+						} else {
+							echo '<script>alert("Wrong file type!");</script>';
+						}
+					} else {
+						echo '<script>alert("Wrong file type!");</script>';
+					}
+				}
+			}
+			
+			$user = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+			$prof = R::findOne('profiles', 'user_id = ?', [$user->unique_id]);
+								
+			$user->name = $_POST['name'];
+			$user->nickname = $_POST['nickname'];
+			R::store($user);
+							
+			$prof->birthday = $_POST['birthday'];
+			$prof->country = $_POST['country'];
+			if(isset($_POST['haircolor'])) $prof->haircolor = $_POST['haircolor'];
+			if(isset($_POST['marital'])) $prof->marital = $_POST['marital'];								
+			if(isset($_POST['about'])) $prof->about = $_POST['about'];
+			if(isset($_POST['wishes'])) $prof->wishes = $_POST['wishes'];
+								
+			R::store($prof);
+		}
+	} else {
+		echo '<script>alert("Fill required fields!");</script>';
+	}
+
+?>
+

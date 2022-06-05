@@ -189,10 +189,10 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 				;} ?>
 			</div>
 		</div>
-		<!-- Modal -->
+		<!-- Edit Modal -->
 		<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
-				<form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="modal-content create-form">
+				<form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="modal-content edit-profile-form">
 					<div class="modal-header">
 						<h5 class="modal-title" id="editModalLabel">Edit the account</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -250,9 +250,20 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 									<option>In Active</option>
 								</select>
 							</div>
+							<div class="">
+								<label>Photos</label>
+								<?php 
+								
+								$photos = R::find('photos', 'user_id = ?', [$_SESSION['unique_id']]);
+								foreach($photos as $photo) {
+									echo 'SAS| ';
+								}
+								
+								?>
+							</div>
 							<div class="input-group mb-3 field image">
 								<span class="input-group-text" id="basic-addon1">Photos</span>
-								<input type="file" name="photos[]" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1" multiple required>
+								<input type="file" name="photos[]" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1" multiple>
 							</div>
 							<div class="input-group mb-3 field image">
 								<span class="input-group-text" id="basic-addon1">About</span>
@@ -282,6 +293,21 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 	document.getElementById("chavatar-input").onchange = function() {
 		document.getElementById("chavatar").submit();
 	};
+		
+	$('.edit-profile-form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: 'php/edit-profile.php',
+            data:  new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+            success: function(response){
+                alert(response);
+			}
+		});
+    });
 </script>
 </body>
 </html>
