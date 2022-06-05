@@ -1,5 +1,5 @@
 <?php 
-ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+
 	include 'php/config.php';
 
 	session_start();
@@ -10,6 +10,17 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 	$acc_type = "";
 	
 	$vtor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+	if(isset($_GET['send']) && $vtor->confirm == false) {
+		$token = R::findOne('tokens', 'user_id = ?', [$vtor->unique_id]);
+		$to      = $vtor->email;
+		$subject = 'Dating mail confirmation';
+		$message = 'Confirm your account email by the URL: localhost/activate?token='.$token->token;
+		$headers = 'From: dating@localhost' . "\r\n" .
+		    	   'Reply-To: dating@localhost' . "\r\n" .
+	     		   'X-Mailer: PHP/' . phpversion();
+
+		mail($to, $subject, $message, $headers);
+	}
 	
 	if(R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']])->type == 'male') {
 		if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['unique_id']) {
@@ -94,7 +105,7 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 ?>
 
 <?php include_once "tml/header.php"; ?>
-	
+	<?php if($acc->confirm == false) echo '<div class="bg-success text-center p-3 text-light">Confirm your email to continue chatting! <a class="text-light" href="profile?send">Resend the letter</a></div>'; ?>
 	<main class="bg-light">
 		<div class="container-fluid p-3">
 			<div class="row">
