@@ -21,7 +21,7 @@
 <div style="height:80% !important">
   <div class="wrapper d-flex flex-column col-lg-4 col-md-6 col-sm-12 m-auto">	
       <header class="d-flex">
-        <img class="m-3" width=50 height=50 src="php/images/<?php echo $kunparolanto['img']; ?>" alt="">
+        <a title="User's profile" href="/profile?id=<?php echo $_GET['id']; ?>"><img class="m-3" width=50 height=50 src="php/images/<?php echo $kunparolanto['img']; ?>" alt=""></a>
         <div class="details my-3">
           <span><?php echo $kunparolanto['name']." (".$kunparolanto['nickname'].")"; ?></span>
           <p><?php echo $kunparolanto['status']; ?></p>

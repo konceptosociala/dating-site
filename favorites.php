@@ -29,7 +29,7 @@
 			}
 			
 			$favs = R::getAll("SELECT * FROM favorites WHERE user_id = {$_SESSION['unique_id']}");
-			if(empty($favs)) echo "<center><h3>You haven't any favorites</h3></center>";
+			if(!$favs) echo "<center><h3>You haven't any favorites</h3></center>";
 			for($i = 0; $i < count($favs); $i++) {
 				$acc  = R::findOne('users', 'unique_id = ?', [$favs[$i]['fav_id']]);
 				$prof = R::findOne('profiles', 'user_id = ?', [$favs[$i]['fav_id']]);
