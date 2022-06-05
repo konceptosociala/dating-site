@@ -1,12 +1,12 @@
 <?php 
-  session_start();
-  if(!isset($_SESSION['unique_id'])){
-    header("location: signup.php");
-  }
+	session_start();
+	if(!isset($_SESSION['unique_id'])){
+		header("location: signup.php");
+	}
 	
-  $page_title = "Admin Panel";
+	$page_title = "Admin Panel";
   
-  require 'php/config.php'
+	require 'php/config.php';
 	
 ?>
 
@@ -45,7 +45,7 @@
     </header>
 
 	<main class="col-9">
-		<div class="tab-content" id="myTabContent">
+		<div class="tab-content container-fluid" id="myTabContent">
 			<div class="tab-pane fade" id="dashboard-tab-pane" role="tabpanel" aria-labelledby="dashboard-tab" tabindex="0">
 				<h1 class="display-4 text-center m-3">Visitance</h1>
 				<canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" style="display: block; width: 1090px; height: 460px;" width="1090" height="460"></canvas>
@@ -55,48 +55,43 @@
 			</div>
 			<div class="tab-pane fade" id="accounts-tab-pane" role="tabpanel" aria-labelledby="accounts-tab" tabindex="2">
 				<h1 class="display-4 text-center m-3">Female accounts</h1>
-				<center><button class="btn btn-success btn-lg mb-4" data-bs-toggle="modal" data-bs-target="#createModal">+ Create</button></center>
-				<div class="row">
-					<div class="col-12">
+				<center><button class="btn btn-info btn-lg mb-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="icon-search"></i> Search</button>
+				<button class="btn btn-success btn-lg mb-4" data-bs-toggle="modal" data-bs-target="#createModal">+ Create</button></center>
+				<div class="row girl-cards-div">
 						
 						<?php
 						
-						$girls = R::getAll("SELECT * FROM users WHERE type = 'female'");
-						if(empty($girls)) echo "<center><h3>You haven't created any accounts yet</h3></center>";
-						for($i = 0; $i < count($girls); $i++) {	
-							$acc = $girls[$i];					
-							$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);
-							$d1 = new DateTime(date('y-m-d'));
-							$d2 = new DateTime($prof->birthday);
+							$girls = R::getAll("SELECT * FROM users WHERE type = 'female'");
+							if(empty($girls)) echo "<center><h3>You haven't created any accounts yet</h3></center>";
+							for($i = 0; $i < count($girls); $i++) {	
+								$acc = $girls[$i];					
+								$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);
+								$d1 = new DateTime(date('y-m-d'));
+								$d2 = new DateTime($prof->birthday);
 
-							$diff = $d2->diff($d1);
-							
-							if($acc['status'] == "Online"){
-								$status = '<p class="card-text text-success">• Online</h5>';
-							} else {
-								$status = '<p class="card-text text-secondary">Offline</h5>';
-							}		
-													
-							echo 
-							'
-							<div class="col-lg-3 col-md-6 col-sm-12 my-3">
-								<div class="card mx-2">
-									<div class="card-body">
-										<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5><a href="?remove-favorite='.$acc['unique_id'].'" class="btn btn-close ms-auto"></a></div>
-										'.$status.'
+								$diff = $d2->diff($d1);	
+														
+								echo 
+								'
+								<div id="remove'.$acc['unique_id'].'" class="col-lg-4 col-md-6 col-sm-12 my-3 girl-card">
+									<div class="card mx-2">
+										<div class="card-body">
+											<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5><button onclick="remove_user('.$acc['unique_id'].')" class="btn btn-close ms-auto"></button></div>
+											<i>'.$acc['nickname'].'</i>
+										</div>
+										<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="border-radius: 0; background-image: url(php/images/'.$acc['img'].')">
+											&nbsp;
+										</div></a>
+										<div class="d-flex">
+											<button onclick="editor_id('.$acc['unique_id'].')" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-warning flex-fill" style="border-radius: 0 0 0 5px">Edit</button>
+											<button onclick="use_id('.$acc['unique_id'].')" data-bs-toggle="modal" data-bs-target="#useModal" class="btn btn-success flex-fill" style="border-radius: 0 0 5px 0">Use</button>
+										</div>
 									</div>
-									<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="background-image: url(php/images/'.$acc['img'].')">
-										&nbsp;
-									</div></a>
-									<a href="chat?id='.$acc['unique_id'].'" class="btn btn-success" style="border-radius: 0 0 5px 5px">Chat</a>
 								</div>
-							</div>
-							';
-						}
+								';
+							}	
 						
-						?>
-						
-					</div>
+						?>						
 				</div>
 			</div>
 			<div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="3">
@@ -199,6 +194,50 @@
 			</div>
 		  </div>
 		</div>
+		<!-- Use Modal -->
+		<div class="modal fade" id="useModal" tabindex="-1" aria-labelledby="useModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="useModalLabel">Use account</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			  </div>
+			  <div class="modal-body">
+				<div class="input-group mb-3 field input">
+					<span class="input-group-text" id="basic-addon1">Email</span>
+					<input type=text id="acc_email" class="form-control" disabled aria-label="Email" aria-describedby="basic-addon1" required>
+				</div>
+				<div class="input-group mb-3 field input">
+					<span class="input-group-text" id="basic-addon1">Password</span>
+					<input type=text id="acc_pswd" class="form-control" disabled aria-label="Email" aria-describedby="basic-addon1" required>
+				</div>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<!-- Search Modal -->
+		<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="modal-content find-form">
+					<div class="modal-header">
+						<h5 class="modal-title" id="searchModalLabel">Search</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div>
+							<input type="text" name="search-field" class="form-control" placeholder="Enter the nickname or ID" aria-label="First name" aria-describedby="basic-addon1" required>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-success">Search</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</main>
 </section>
 
@@ -296,6 +335,65 @@
 			}
 		});
     });
+	
+	$('.find-form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: 'php/search-user.php',
+            data:  new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+            success: function(response){
+                if(response == '') {
+					alert("User is not found!");
+				} else {
+					$('.girl-card').remove();
+					$('.girl-cards-div').append(response);
+				}
+			}
+		});
+    });
+    
+    function remove_user(id) {
+		$('#remove' + id).remove();
+		$.ajax({
+            type: "POST",
+            url: 'php/remove-user.php',
+            data: {id: id},
+            success: function(response){
+                alert(response);
+			}
+		});
+	}
+	
+	function editor_id(id) {
+		$.ajax({
+            type: "POST",
+            url: 'php/get-edit-user.php',
+            data: {id: id},
+            success: function(response){
+                alert(response);
+			}
+		});
+	}
+	
+	function use_id(id) {
+		$.ajax({
+            type: "POST",
+            url: 'php/user-cred.php',
+            data: {id: id},
+            success: function(response){
+                var data = JSON.parse(response);
+                $('#acc_email').attr("value", data.email);
+                $('#acc_pswd').attr("value", data.pswd);
+			},
+			error: function() {
+				alert('Error!');
+			}
+		});
+	}
 
 </script>
 </body>
