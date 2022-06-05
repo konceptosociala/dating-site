@@ -113,7 +113,7 @@
 											<div class="d-flex"><h5 class="card-title">'.$stick['name'].'</h5><button onclick="remove_sticker(\''.$stick['name'].'\')" class="btn btn-close ms-auto"></button></div>
 										</div>
 										<div class="card-field p-3" style="border-radius: 0;">
-											<center><img style="object-fit: containt; max-height: 275px" src="php/images/stickers/'.$stick['img'].'" class="img-fluid"></center>
+											<center><img style="object-fit: containt; max-height: 275px !important" src="php/images/stickers/'.$stick['img'].'" class="img-fluid"></center>
 										</div>
 									</div>
 								</div>

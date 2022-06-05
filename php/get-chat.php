@@ -36,7 +36,7 @@
 									</div>
 									</div>';
 					} else if($row['msg_type'] == 'sticker') {
-						$output .= '<img style="width: 40%; margin: 10px; border-radius: 0" src="'.$row['msg'].'">';
+						$output .= '<img style="display: block; width: 40%; margin: 15px; border-radius: 0" src="'.$row['msg'].'">';
 					} else {
 						$output .= 'image_ANT';
 					}
