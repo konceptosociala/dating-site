@@ -261,13 +261,19 @@
 									<option>In Active</option>
 								</select>
 							</div>
-							<div class="">
-								<label>Photos</label>
+							<label class="">Photos</label>
+							<div class="row p-2 my-2 photos-row">
 								<?php 
 								
 								$photos = R::find('photos', 'user_id = ?', [$_SESSION['unique_id']]);
 								foreach($photos as $photo) {
-									echo 'SAS| ';
+									echo 
+									'
+									<div id="photo-'.$photo->id.'" class="d-flex col-4 p-3 justify-content-center align-items-center">
+										<button class="btn btn-danger remove-photo-b" onclick="remove_photo('.$photo->id.')" type="button">x</button>
+										<img class="img-fluid" style="max-height: 100px" src="php/images/'.$photo->img.'">
+									</div>
+									';
 								}
 								
 								?>
@@ -315,10 +321,22 @@
 			cache: false,
 			processData: false,
             success: function(response){
-                alert(response);
+                $('.photos-row').append(response);  
 			}
 		});
     });
+    
+    function remove_photo(id) {
+		$.ajax({
+            type: "POST",
+            url: 'php/remove-photo.php',
+            data: {photo_id: id},
+            success: function(response){
+                alert(response);
+                $('#photo-' + id).remove();
+			}
+		});
+	}
 </script>
 </body>
 </html>

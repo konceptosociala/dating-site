@@ -4,8 +4,10 @@
 	margin: 0;
 }
 
-.bio {
-	
+.remove-photo-b {
+	position: absolute;
+	margin-top: -50px;
+	margin-right: -70px;
 }
 
 .card {

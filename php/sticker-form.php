@@ -1,9 +1,11 @@
 <?php
 	require 'config.php';
-
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
+	
+	session_start();
+	$check_root = R::findOne('users', 'nickname = "root"');
+	if($check_root->unique_id != $_SESSION['unique_id']) {
+		header("location: /");
+	}
 
 	if(isset($_POST['sticker-name']) && isset($_FILES['sticker-file'])){		
 		if(!preg_match('/[^A-Za-z0-9.#\\-$]/', $_POST['sticker-name'])){

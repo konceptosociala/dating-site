@@ -24,32 +24,47 @@
 			if(!empty($_FILES['photos']['name'][0])){	
 				$img_name = $_FILES['photos']['name'];
 				$img_type = $_FILES['photos']['type'];
-				$tmp_name = $_FILES['photos']['tmp_name'];		
-				for($i = 0; $i < count($img_name); $i++){
-					$img_explode = explode('.',$img_name[$i]);
-					$img_ext = end($img_explode);
-					
-					$extensions = ["jpeg", "png", "jpg"];
-					if(in_array($img_ext, $extensions) === true){
-						$types = ["image/jpeg", "image/jpg", "image/png"];
-						if(in_array($img_type[$i], $types) === true){
-							$time = time();
-							$new_img_name = $time.$img_name[$i];
-							if(move_uploaded_file($tmp_name[$i],"images/".$new_img_name)){
-								$photos = R::dispense('photos');
-								$photos->img = $new_img_name;
-								$photos->user_id = $_SESSION['unique_id'];
-								R::store($photos);
+				
+				$photo_count = count(R::find('photos', 'user_id = ?', [$_SESSION['unique_id']]));				
+				$tmp_name = $_FILES['photos']['tmp_name'];
+				
+				if($photo_count + count($_FILES['photos']['name']) > 9) {
+					echo '<script>alert("Max count of photos is 9!")</script>';
+				} else {
+					for($i = 0; $i < count($img_name); $i++){
+						$img_explode = explode('.',$img_name[$i]);
+						$img_ext = end($img_explode);
+						
+						$extensions = ["jpeg", "png", "jpg"];
+						if(in_array($img_ext, $extensions) === true){
+							$types = ["image/jpeg", "image/jpg", "image/png"];
+							if(in_array($img_type[$i], $types) === true){
+								$time = time();
+								$new_img_name = $time.$img_name[$i];
+								if(move_uploaded_file($tmp_name[$i],"images/".$new_img_name)){
+									$photos = R::dispense('photos');
+									$photos->img = $new_img_name;
+									$photos->user_id = $_SESSION['unique_id'];
+									R::store($photos);
+									echo 
+									'
+									<div id="photo-'.$photos->id.'" class="d-flex col-4 p-3 justify-content-center align-items-center">
+										<button class="btn btn-danger remove-photo-b" onclick="remove_photo('.$photos->id.')" type="button">x</button>
+										<img class="img-fluid" style="max-height: 100px" src="php/images/'.$photos->img.'">
+									</div>
+									';
+									
+								}
+							} else {
+								echo '<script>alert("Wrong file type!");</script>';
 							}
 						} else {
 							echo '<script>alert("Wrong file type!");</script>';
 						}
-					} else {
-						echo '<script>alert("Wrong file type!");</script>';
 					}
 				}
 			}
-			
+		
 			$user = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
 			$prof = R::findOne('profiles', 'user_id = ?', [$user->unique_id]);
 								
