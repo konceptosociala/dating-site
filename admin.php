@@ -8,6 +8,11 @@
   
 	require 'php/config.php';
 	
+	$check_root = R::findOne('users', 'nickname = "root"');
+	if($check_root->unique_id != $_SESSION['unique_id']) {
+		header("location: /");
+	}
+	
 ?>
 
 
