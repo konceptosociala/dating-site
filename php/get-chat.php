@@ -24,7 +24,7 @@
 					} else if($row['msg_type'] == 'image') {
 						$output .= '<img style="display: block; width: 60%; margin: 15px; margin-left:auto; border-radius: 15px" src="'.$row['msg'].'">';
 					} else if($row['msg_type'] == 'video') {
-						$output .= '<video style="width: 60%; margin: 15px; margin-left:auto; border-radius: 15px" controls><source src="'.$row['msg'].'"></video>';
+						$output .= '<video style="width: 60%; margin: 15px; margin-left: calc(40% - 15px); border-radius: 15px" controls><source src="'.$row['msg'].'"></video>';
 					}
                 } else {
 					if($row['msg_type'] == 'text') {
