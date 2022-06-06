@@ -109,14 +109,30 @@
 	<main class="bg-light">
 		<div class="container-fluid p-3">
 			<div class="row">
-				<div class="col-lg-2 col-sm-0"></div>
-				<form class="col-lg-2 col-md-6 col-sm-6 mb-md-0" id="chavatar" action="/profile" method="POST" enctype="multipart/form-data" autocomplete="off">
-					<label for="chavatar-input"><img <?php if($acc_type == 'visitor') echo 'data-bs-toggle="tooltip" style="cursor: pointer" title="Click to change avatar"'; ?> class="img-fluid soft-shadow" src="php/images/<?php echo $acc->img; ?>"></label>
-					<?php if($acc_type == 'visitor') echo '<input type="file" id="chavatar-input" name="chavatar-input" class="d-none">'; ?>
-				</form>
-				<div class="d-flex flex-column col-lg-5 col-sm-6">
+				<div class="col-0 col-lg-2 col-sm-0"></div>
+				<div class="d-flex flex-column col-6 col-lg-2 col-md-6 col-sm-6">
+					<form class="mb-3" id="chavatar" action="/profile" method="POST" enctype="multipart/form-data" autocomplete="off">
+						<label for="chavatar-input"><img <?php if($acc_type == 'visitor') echo 'data-bs-toggle="tooltip" title="Click to change avatar"'; ?> class="soft-shadow" style="width: 100%; <?php if($acc_type == 'visitor') echo 'cursor:pointer';?>" src="php/images/<?php echo $acc->img; ?>"></label>
+						<?php if($acc_type == 'visitor') echo '<input type="file" id="chavatar-input" name="chavatar-input" class="d-none">'; ?>
+					</form>
+					<div class="row">
+						<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
+							<img class="img-fluid" style="max-height: 100px" src="https://media-cdn.tripadvisor.com/media/photo-s/15/a4/9b/77/legacy-hotel-at-img-academy.jpg">
+						</div>
+						<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
+							<img class="img-fluid" style="max-height: 100px" src="https://image.shutterstock.com/image-photo/open-road-leads-grand-tetons-260nw-1776070577.jpg">
+						</div>
+						<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
+							<img class="img-fluid" style="max-height: 100px" src="https://thumbs.dreamstime.com/b/vertical-shot-road-magnificent-mountains-under-blue-sky-captured-california-163571053.jpg">
+						</div>
+						<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
+							<img class="img-fluid" style="max-height: 100px" src="https://thumbs.dreamstime.com/b/vertical-shot-road-magnificent-mountains-under-blue-sky-captured-california-163571053.jpg">
+						</div>
+					</div>
+				</div>
+				<div class="d-flex flex-column col-6 col-lg-5 col-sm-6">
 					<div class="container">
-						<h1><?php echo $acc->nickname; ?> <?php if($acc_type == 'person') echo '<a href=?favorite='.$acc->unique_id.' class="text-decoration-none icon-star-empty text-warning" title="Add to favorites"></a>'; ?></h1>
+						<h1 style="word-break: break-all;"><?php echo $acc->nickname; ?> <?php if($acc_type == 'person') echo '<a href=?favorite='.$acc->unique_id.' class="text-decoration-none icon-star-empty text-warning" title="Add to favorites"></a>'; ?></h1>
 						<p>Profile ID: <?php echo $acc->unique_id; ?></p>
 					</div>
 					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
@@ -124,37 +140,37 @@
 							<div class="col-12 container p-3 bg-light">
 								<h4><b>Bio</b></h4>
 							</div>
-							<div class="col-lg-4 col-sm-6">
+							<div class="col-12 col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Name</b>
 									<p><?php echo $acc->name; ?></p>
 								</div>
 							</div>
-							<div class="col-lg-4 col-sm-6">
+							<div class="col-12 col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Birthday</b>
 									<p><?php echo $prof->birthday; ?></p>
 								</div>
 							</div>
-							<div class="col-lg-4 col-sm-6">
+							<div class="col-12 col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Marital status</b>
 									<p><?php if($prof->marital != '') echo $prof->marital; else echo '-'; ?></p>
 								</div>
 							</div>
-							<div class="col-lg-4 col-sm-6">
+							<div class="col-12 col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Country</b>
 									<p><?php if($prof->country != '') echo $prof->country; else echo '-'; ?></p>
 								</div>
 							</div>
-							<div class="col-lg-4 col-sm-6">
+							<div class="col-12 col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Color of hair</b>
 									<p><?php if($prof->haircolor != '') echo $prof->haircolor; else echo '-'; ?></p>
 								</div>
 							</div>
-							<div class="col-lg-4 col-sm-6">
+							<div class="col-12 col-lg-4 col-sm-6">
 								<div class="container py-2">
 									<b>Email</b>
 									<p><?php if($acc->confirm == true) echo 'Confirmed'; else echo 'Not confirmed'; ?></p>
@@ -162,7 +178,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
+					<div class="d-none d-lg-block d-md-block d-sm-block container-fluid soft-shadow p-0 mb-4 bg-white">
 						<div class="d-flex flex-wrap">
 							<div class="col-12 container p-3 bg-light">
 								<h4><b>About me</b></h4>
@@ -174,7 +190,33 @@
 							</div>
 						</div>
 					</div>
-					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
+					<div class="d-none d-lg-block d-md-block d-sm-block container-fluid soft-shadow p-0 mb-4 bg-white">
+						<div class="d-flex flex-wrap">
+							<div class="col-12 container p-3 bg-light">
+								<h4><b>Wishes</b></h4>
+							</div>
+							<div class="col-12">
+								<div class="container py-2">
+									<p style="text-indent: 25px"><?php if($prof->wishes != '') echo $prof->wishes; else echo 'Nothing yet'; ?></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d-lg-none d-md-none d-sm-none col-sm-12 d-flex flex-column my-3 my-lg-0 my-sm-3">
+					<div class="container soft-shadow p-0 mb-4 bg-white">
+						<div class="d-flex flex-wrap">
+							<div class="col-12 container p-3 bg-light">
+								<h4><b>About me</b></h4>
+							</div>
+							<div class="col-12">
+								<div class="container py-2">
+									<p style="text-indent: 25px"><?php if($prof->about != '') echo $prof->about; else echo 'Nothing yet'; ?></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="container soft-shadow p-0 mb-4 bg-white">
 						<div class="d-flex flex-wrap">
 							<div class="col-12 container p-3 bg-light">
 								<h4><b>Wishes</b></h4>
@@ -188,7 +230,7 @@
 					</div>
 				</div>
 				<?php if($acc_type == "visitor"){echo 
-					'<div class="col-lg-3 col-sm-12 d-flex flex-column">
+					'<div class="col-lg-3 col-sm-12 d-flex flex-column my-3 my-lg-0 my-sm-3">
 						<div class="container soft-shadow p-3 bg-white">
 							<p><b>Your profile</b></p>
 							<p><a href=# class="link s-nav text-decoration-none" data-bs-toggle="modal" data-bs-target="#editModal">
@@ -302,7 +344,8 @@
 	</main>
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 <script>
 	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
