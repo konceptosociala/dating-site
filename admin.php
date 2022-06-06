@@ -209,21 +209,77 @@
 		</div>
 		<!-- Edit Modal -->
 		<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<h5 class="modal-title" id="editModalLabel">Edit account</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			  </div>
-			  <div class="modal-body">
-				...
-			  </div>
-			  <div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			  </div>
+			<div class="modal-dialog">
+				<form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="modal-content edit-user-form">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editModalLabel">Edit the account</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div>
+							<div class="input-group mb-3 field input">
+								<input id="f-hidden-id" name="hidden-id" value="" hidden>
+								<span class="input-group-text" id="basic-addon1">Name</span>
+								<input id="f-name" type="text" name="name" class="form-control" placeholder="Enter a name" aria-label="First name" value="" aria-describedby="basic-addon1" required>
+								<span class="input-group-text" id="basic-addon1">Nickname</span>
+								<input id="f-nickname" type="text" name="nickname" class="form-control" placeholder="Enter a nickname" value="" aria-label="Last name" aria-describedby="basic-addon1" required>
+							</div>
+							<div class="input-group mb-3 field input">
+								<span class="input-group-text" id="basic-addon1">Birthdate</span>
+								<input id="f-birthday" type="date" name="birthday" class="form-control" placeholder="Enter your email" value="" aria-label="Email" aria-describedby="basic-addon1" required>
+							</div>
+							<div class="input-group mb-3 field input">
+								<span class="input-group-text" id="basic-addon1">Country</span>
+								<select id="f-country" name="country" class="form-control" aria-label="Country" aria-describedby="basic-addon1" required>
+									<option disabled></option>
+									<option disabled>-- Select country --</option>
+								</select>
+							</div>
+							<div class="input-group mb-3 field input">
+								<span class="input-group-text" id="basic-addon1">Hair color</span>
+								<select name="haircolor" class="form-control" aria-label="Hair color" aria-describedby="basic-addon1">
+									<option id="f-haircolor" disabled selected></option>
+									<option disabled>-- Select color --</option>
+									<option>Blonde</option>
+									<option>Brunette</option>
+									<option>Red</option>
+									<option>Black</option>
+								</select>
+								<span class="input-group-text" id="basic-addon1">Marital</span>
+								<select name="marital" class="form-control" aria-label="Marital" aria-describedby="basic-addon1">
+									<option id="f-marital" disabled selected></option>
+									<option disabled>-- Select status --</option>
+									<option>Single</option>
+									<option>Married</option>
+									<option>Widowed</option>
+									<option>Divorced</option>
+									<option>In Active</option>
+								</select>
+							</div>
+							<label class="">Photos</label>
+							<div class="row p-2 my-2 photos-row">
+
+							</div>
+							<div class="input-group mb-3 field image">
+								<span class="input-group-text" id="basic-addon1">Photos</span>
+								<input type="file" name="photos[]" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1" multiple>
+							</div>
+							<div class="input-group mb-3 field image">
+								<span class="input-group-text" id="basic-addon1">About</span>
+								<textarea id="f-about" name="about" placeholder="Describe a person" class="form-control" aria-describedby="basic-addon1"></textarea>
+							</div>
+							<div class="input-group mb-3 field image">
+								<span class="input-group-text" id="basic-addon1">Wishes</span>
+								<textarea id="f-wishes" name="wishes" placeholder="Describe personal wishes" class="form-control" aria-describedby="basic-addon1"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</div>
+				</form>
 			</div>
-		  </div>
 		</div>
 		<!-- Use Modal -->
 		<div class="modal fade" id="useModal" tabindex="-1" aria-labelledby="useModalLabel" aria-hidden="true">
@@ -427,6 +483,21 @@
 		});
     });
     
+	$('.edit-user-form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: 'php/edit-user.php',
+            data:  new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+            success: function(response){
+                $('.photos-row').append(response); 
+			}
+		});
+    });
+    
     function remove_user(id) {
 		$.ajax({
             type: "POST",
@@ -445,7 +516,29 @@
             url: 'php/get-edit-user.php',
             data: {id: id},
             success: function(response){
+                var data = JSON.parse(response);                
+                $('#f-hidden-id').attr("value", data.hidden_id);
+                $('#f-name').attr("value", data.name);
+                $('#f-nickname').attr("value", data.nickname);
+                $('#f-birthday').attr("value", data.birthday);
+                $('#f-country').append(data.country);
+                $('#f-haircolor').append(data.haircolor);
+                $('#f-marital').append(data.marital);
+                $('#f-about').append(data.about);
+                $('#f-wishes').append(data.wishes);
+                $('.photos-row').append(data.photo_div);
+			}
+		});
+	}
+	
+	function remove_photo(id) {
+		$.ajax({
+            type: "POST",
+            url: 'php/remove-photo.php',
+            data: {photo_id: id},
+            success: function(response){
                 alert(response);
+                $('#photo-' + id).remove();
 			}
 		});
 	}

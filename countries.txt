@@ -25,7 +25,7 @@ Brunei
 Bulgaria
 Burkina Faso
 Burundi
-Côte d'Ivoire
+Cote d'Ivoire
 Cabo Verde
 Cambodia
 Cameroon
@@ -36,12 +36,12 @@ Chile
 China
 Colombia
 Comoros
-Congo (Congo-Brazzaville)
+Congo
 Costa Rica
 Croatia
 Cuba
 Cyprus
-Czechia (Czech Republic)
+Czechia
 Democratic Republic of the Congo
 Denmark
 Djibouti
@@ -53,7 +53,7 @@ El Salvador
 Equatorial Guinea
 Eritrea
 Estonia
-Eswatini (fmr. "Swaziland")
+Eswatini
 Ethiopia
 Fiji
 Finland
@@ -114,7 +114,7 @@ Mongolia
 Montenegro
 Morocco
 Mozambique
-Myanmar (formerly Burma)
+Myanmar
 Namibia
 Nauru
 Nepal

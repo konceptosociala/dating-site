@@ -116,18 +116,26 @@
 						<?php if($acc_type == 'visitor') echo '<input type="file" id="chavatar-input" name="chavatar-input" class="d-none">'; ?>
 					</form>
 					<div class="row">
-						<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
-							<img class="img-fluid" style="max-height: 100px" src="https://media-cdn.tripadvisor.com/media/photo-s/15/a4/9b/77/legacy-hotel-at-img-academy.jpg">
-						</div>
-						<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
-							<img class="img-fluid" style="max-height: 100px" src="https://image.shutterstock.com/image-photo/open-road-leads-grand-tetons-260nw-1776070577.jpg">
-						</div>
-						<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
-							<img class="img-fluid" style="max-height: 100px" src="https://thumbs.dreamstime.com/b/vertical-shot-road-magnificent-mountains-under-blue-sky-captured-california-163571053.jpg">
-						</div>
-						<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
-							<img class="img-fluid" style="max-height: 100px" src="https://thumbs.dreamstime.com/b/vertical-shot-road-magnificent-mountains-under-blue-sky-captured-california-163571053.jpg">
-						</div>
+						<?php
+							$id = "";
+						
+							if(!isset($_GET['id'])){
+								$id = $_SESSION['unique_id'];
+							} else {
+								$id = $_GET['id'];
+							}
+							
+							$loadphotos = R::getAll("SELECT * FROM photos WHERE user_id = '{$id}';");
+							for($i = 0; $i < count($loadphotos); $i++) {
+								echo 
+								'
+								<div class="d-flex py-2 px-2 col-6 justify-content-center align-items-center">
+									<img data-bs-toggle="modal" data-bs-target="#photoViewer" onclick="photo_view(\''.$loadphotos[$i]['img'].'\')" class="img-fluid" style="max-height: 100px" src="php/images/'.$loadphotos[$i]['img'].'">
+								</div>
+								';
+							}
+							
+						?>
 					</div>
 				</div>
 				<div class="d-flex flex-column col-6 col-lg-5 col-sm-6">
@@ -341,6 +349,23 @@
 				</form>
 			</div>
 		</div>
+		<!-- Photo viewer -->
+		<div class="modal fade" id="photoViewer" tabindex="-1" aria-labelledby="photoViewerLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="photoViewerLabel">Photo viewer</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<img class="viewer-img img-fluid" src="" alt="Not found">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</main>
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
@@ -379,6 +404,10 @@
                 $('#photo-' + id).remove();
 			}
 		});
+	}
+	
+	function photo_view(path) {
+		$('.viewer-img').attr("src", "php/images/" + path);
 	}
 </script>
 </body>
