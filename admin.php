@@ -57,6 +57,9 @@
 			</div>
 			<div class="tab-pane fade" id="clients-tab-pane" role="tabpanel" aria-labelledby="clients-tab" tabindex="1">
 				<h1 class="display-4 text-center m-3">Clients</h1>
+				<div class="">
+					
+				</div>
 			</div>
 			<div class="tab-pane fade" id="accounts-tab-pane" role="tabpanel" aria-labelledby="accounts-tab" tabindex="2">
 				<h1 class="display-4 text-center m-3">Female accounts</h1>

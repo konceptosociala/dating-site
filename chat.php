@@ -34,10 +34,14 @@
         <div class="input-group mb-3" data-emojiarea data-type="unicode" data-global-picker="true">
 		  <a class="btn btn-outline-danger emoji emoji-smile emoji-button" id="button-addon2"><i class="icon-smile"></i></a>
 		  <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#stickersModal" id="button-addon2"><i class="icon-sticky-note"></i></a>
-		  <a class="btn btn-outline-danger" id="button-addon2"><i class="icon-picture"></i></a>
+		  <a class="btn btn-outline-danger" onclick="get_file()" id="button-addon2"><i class="icon-picture"></i></a>
 		  <textarea type="text" style="resize:none; height: 40px" name="message" class="input-field form-control" aria-label="Type a message here..." placeholder="Type a message here..." autocomplete="off" aria-describedby="button-addon2"></textarea>
 		  <button class="btn btn-outline-danger" type="button" id="button-addon2"><i class="icon-paper-plane"></i></button>
 		</div>
+      </form>
+      <form id="file-load-form" action="" method="POST" enctype="multipart/form-data" autocomplete="off" >
+		<input type="file" id="upfile" name="upfile" class="d-none">
+		<button type="submit" id="file-submit">SUBMIT</button>
       </form>
   </div>
 </div>
@@ -88,6 +92,29 @@
 			}
 		});
 	}
+	
+	$('#file-load-form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: 'php/send-file.php',
+            data:  new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+            success: function(response){
+                alert(response);
+			}
+		});
+    });
+	
+	function get_file() {
+		document.getElementById("upfile").click();
+	}
+	
+	document.getElementById("upfile").onchange = function() {
+		document.getElementById("file-submit").click();
+	};
 </script>
 </body>
 </html>
