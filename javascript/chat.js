@@ -39,7 +39,7 @@ var interval = setInterval(function () {
 		}
 	});
 
-}, 1000);
+}, 500);
 
 function scrollToBottom(){
 	chatBox.scrollTop = chatBox.scrollHeight;

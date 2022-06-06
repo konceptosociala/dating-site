@@ -41,7 +41,8 @@
       </form>
       <form id="file-load-form" action="" method="POST" enctype="multipart/form-data" autocomplete="off" >
 		<input type="file" id="upfile" name="upfile" class="d-none">
-		<button type="submit" id="file-submit">SUBMIT</button>
+		<input type="hidden" name="adresat" value="<?php echo $kunparolanto->unique_id; ?>">
+		<button type="submit" id="file-submit" class="d-none">SUBMIT</button>
       </form>
   </div>
 </div>
