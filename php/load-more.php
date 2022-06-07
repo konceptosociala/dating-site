@@ -3,9 +3,8 @@
     require "config.php";
     
     $from = $_POST['from'];
-    $to = $_POST['to'];
        
-    $girls = R::getAll("SELECT * FROM users WHERE type = 'female' LIMIT {$from}, {$to}");
+    $girls = R::getAll("SELECT * FROM users WHERE type = 'female' LIMIT 3 OFFSET {$from}");
     for($i = 0; $i < count($girls); $i++) {	
 		$acc = $girls[$i];					
 		$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);

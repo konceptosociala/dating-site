@@ -32,6 +32,8 @@
 				</div>
 			</div>
 			';
+			
+			file_put_contents("../query", "");
 		}
 	} else {
 		$date_to = date('Y');
@@ -65,7 +67,8 @@
 			$query .= " AND haircolor = '".$_POST['haircolor']."'";
 		}
 		
-		$query .= ";";
+		file_put_contents("../query", $query);
+		$query .= " LIMIT 3 OFFSET 0;";
 		$girls = R::getAll($query);
 		if(empty($girls)) echo "<center><h3>No users found!</h3></center>";
 		for($i = 0; $i < count($girls); $i++) {	

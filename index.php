@@ -51,7 +51,7 @@
 				  <span class="input-group-text sbg-bg border-bg text-light">↔</span>
 				  <input name="age-to" type="number" class="form-control" placeholder="To" aria-label="To">
 				</div>
-				<div class="d-flex"><button class="btn btn-light mx-auto" type="submit">Search</button></div>
+				<div class="d-flex"><button class="btn btn-light mx-auto submit-search" type="submit">Search</button></div>
 			</form>
 		</div>
 	</div>
@@ -102,6 +102,7 @@
 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 	
 	var girl_count = 3;
+	var is_search = false;
 	
 	$('#search-girls').submit(function(e) {
         e.preventDefault();
@@ -116,19 +117,34 @@
                 $('.girls-row').html(response);
 			}
 		});
+		is_search = true;
+		girl_count = 3;
     });
     
     $('#show-more').click(function() {
-		$.ajax({
-            type: "POST",
-            url: 'php/load-more.php',
-            data:  {from: girl_count, to: girl_count + 3},
-            success: function(response){
-                $('.girls-row').append(response);
-			}
-		});
+		if(is_search == false){
+			$.ajax({
+				type: "POST",
+				url: 'php/load-more.php',
+				data:  {from: girl_count},
+				success: function(response){
+					$('.girls-row').append(response);
+				}
+			});
+			girl_count += 3;
+		} else {
+			$.ajax({
+				type: "POST",
+				url: 'php/load-more-search.php',
+				data:  {from: girl_count},
+				success: function(response){
+					$('.girls-row').append(response);
+				}
+			});
+			girl_count += 3;
+		}
 		
-		girl_count += 3;
+		
     });
 </script>
 </body>
