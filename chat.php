@@ -104,7 +104,6 @@
 			cache: false,
 			processData: false,
             success: function(response){
-                alert(response);
 			}
 		});
     });

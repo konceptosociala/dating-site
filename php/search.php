@@ -4,7 +4,35 @@
     
     if($_POST['id'] != ''){
 		$girls = R::getAll("SELECT * FROM users INNER JOIN profiles ON profiles.user_id=users.unique_id WHERE type = 'female' AND unique_id = '{$_POST['id']}';");
-		var_dump($girls);
+		if(empty($girls)) echo "<center><h3>No users found!</h3></center>";
+		for($i = 0; $i < count($girls); $i++) {	
+			$acc = $girls[$i];					
+			$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);
+			$d1 = new DateTime(date('y-m-d'));
+			$d2 = new DateTime($prof->birthday);
+			$diff = $d2->diff($d1);
+			
+			if($acc['status'] == "Online"){
+				$status = '<p class="card-text text-success">• Online</h5>';
+			} else {
+				$status = '<p class="card-text text-secondary">Offline</h5>';
+			}		
+											
+			echo 
+			'
+			<div class="col-lg-3 col-md-6 col-sm-12 my-3">
+				<div class="card mx-2">
+					<div class="card-body">
+						<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5></div>
+						'.$status.'
+					</div>
+					<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="background-image: url(php/images/'.$acc['img'].')">
+						&nbsp;
+					</div></a>
+				</div>
+			</div>
+			';
+		}
 	} else {
 		$date_to = date('Y');
 		$date_to .= '-01-01';
@@ -39,9 +67,35 @@
 		
 		$query .= ";";
 		$girls = R::getAll($query);
-		var_dump($girls);
+		if(empty($girls)) echo "<center><h3>No users found!</h3></center>";
+		for($i = 0; $i < count($girls); $i++) {	
+			$acc = $girls[$i];					
+			$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);
+			$d1 = new DateTime(date('y-m-d'));
+			$d2 = new DateTime($prof->birthday);
+			$diff = $d2->diff($d1);
+			
+			if($acc['status'] == "Online"){
+				$status = '<p class="card-text text-success">• Online</h5>';
+			} else {
+				$status = '<p class="card-text text-secondary">Offline</h5>';
+			}		
+											
+			echo 
+			'
+			<div class="col-lg-3 col-md-6 col-sm-12 my-3">
+				<div class="card mx-2">
+					<div class="card-body">
+						<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5></div>
+						'.$status.'
+					</div>
+					<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="background-image: url(php/images/'.$acc['img'].')">
+						&nbsp;
+					</div></a>
+				</div>
+			</div>
+			';
+		}
 	}
     
-    
-   // echo '123';
 ?>

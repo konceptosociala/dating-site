@@ -56,11 +56,10 @@
 		</div>
 	</div>
 	<div class="container mt-3">
-		<div class="row">
+		<div class="row girls-row">
 			<?php
 						
 				$girls = R::getAll("SELECT * FROM users WHERE type = 'female'");
-				if(empty($girls)) echo "<center><h3>You haven't created any accounts yet</h3></center>";
 				for($i = 0; $i < count($girls); $i++) {	
 					$acc = $girls[$i];					
 					$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);
@@ -111,7 +110,7 @@
 			cache: false,
 			processData: false,
             success: function(response){
-                alert(response);
+                $('.girls-row').html(response);
 			}
 		});
     });
