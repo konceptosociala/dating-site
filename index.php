@@ -15,14 +15,14 @@
 	<div class="row p-5 background-header">
 		<h1 style="text-shadow:0 0px 5px white" class="text-light col-md-6 col-sm-12 my-md-auto my-sm-5 display-4 text-center animate__animated animate__flash">Find your love!</h1>
 		<div class="col-md-6 col-sm-12 my-sm-5">
-			<form class="container">
+			<form id="search-girls" class="container">
 				<div class="input-group mb-3">
 				  <span class="input-group-text sbg-bg border-bg text-white" id="basic-addon1">User ID</span>
-				  <input type="text" class="form-control" placeholder="ID" aria-label="ID" aria-describedby="basic-addon1">
+				  <input name="id" type="text" class="form-control" placeholder="ID" aria-label="ID" aria-describedby="basic-addon1">
 				</div>
 				<div class="input-group mb-3 col-1">
 				  <span class="input-group-text sbg-bg border-bg text-white" id="basic-addon1">Country</span>
-				  <select class="form-control" aria-label="Country" aria-describedby="basic-addon1">
+				  <select name="country" class="form-control" aria-label="Country" aria-describedby="basic-addon1">
 					<option selected disabled>-- Select country --</option>
 					<?php
 										
@@ -37,7 +37,7 @@
 				</div>
 				<div class="input-group mb-3">
 				  <span class="input-group-text sbg-bg border-bg text-white" id="basic-addon1">Hair Color</span>
-				  <select class="form-control" aria-label="Country" aria-describedby="basic-addon1">
+				  <select name="haircolor" class="form-control" aria-label="Country" aria-describedby="basic-addon1">
 					<option selected disabled>-- Select color --</option>
 					<option>Blonde</option>
 					<option>Brunette</option>
@@ -47,9 +47,9 @@
 				</div>
 				<div class="input-group mb-3">
 				  <span class="input-group-text sbg-bg border-bg text-light">Age</span>
-				  <input type="text" class="form-control" placeholder="From" aria-label="From">
+				  <input name="age-from" type="number" class="form-control" placeholder="From" aria-label="From">
 				  <span class="input-group-text sbg-bg border-bg text-light">↔</span>
-				  <input type="text" class="form-control" placeholder="To" aria-label="To">
+				  <input name="age-to" type="number" class="form-control" placeholder="To" aria-label="To">
 				</div>
 				<div class="d-flex"><button class="btn btn-light mx-auto" type="submit">Search</button></div>
 			</form>
@@ -95,4 +95,27 @@
 	</div>
 </div>
 
-<?php include 'tml/footer.php' ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script>
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+	
+	$('#search-girls').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: 'php/search.php',
+            data:  new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+            success: function(response){
+                alert(response);
+			}
+		});
+    });
+</script>
+</body>
+</html>
+

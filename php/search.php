@@ -1,17 +1,33 @@
 <?php
     session_start();
-    include_once "config.php";
+    require "config.php";
+    
+    if($_POST['id'] != ''){
+		
+	} else {
+		$date_to = date('Y');
+		$date_to .= '-01-01';
+		$date_from = date('Y-m-d');
+    
+		$query = "SELECT * FROM users INNER JOIN profiles ON profiles.user_id=users.unique_id WHERE type = 'female'";
+		
+		if($_POST['age-from'] != '' && $_POST['age-to'] != ''){
+			$from = date('Y-m-d', strtotime($date_from. ' - '.$_POST['age-from'].' years'));
+			$to   = date('Y-m-d', strtotime($date_to. ' - '.$_POST['age-to'].' years'));
 
-    $outgoing_id = $_SESSION['unique_id'];
-    $searchTerm = mysqli_real_escape_string($conn, $_POST['searchTerm']);
-
-    $sql = "SELECT * FROM users WHERE NOT unique_id = {$outgoing_id} AND (fname LIKE '%{$searchTerm}%' OR lname LIKE '%{$searchTerm}%') ";
-    $output = "";
-    $query = mysqli_query($conn, $sql);
-    if(mysqli_num_rows($query) > 0){
-        include_once "data.php";
-    }else{
-        $output .= 'No user found related to your search term';
-    }
-    echo $output;
+			$query .= " AND birthday BETWEEN '".$to."' AND '".$from."'";	//...отнимать даты от СЕГОДНЯ, а я спать пошёл :)
+		} else if(isset($_POST['age-from'])) {
+			
+		} else if(isset($_POST['age-to'])) {
+			
+		}
+		
+		$query .= ";";
+		echo $query;
+		$girls = R::getAll($query);
+		var_dump($girls);
+	}
+    
+    
+   // echo '123';
 ?>
