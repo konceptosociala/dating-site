@@ -59,7 +59,7 @@
 		<div class="row girls-row">
 			<?php
 						
-				$girls = R::getAll("SELECT * FROM users WHERE type = 'female'");
+				$girls = R::getAll("SELECT * FROM users WHERE type = 'female' LIMIT 0, 3");
 				for($i = 0; $i < count($girls); $i++) {	
 					$acc = $girls[$i];					
 					$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);
@@ -91,6 +91,7 @@
 				
 			?>
 		</div>
+		<center><button class="btn btn-primary m-3" id="show-more">Show more</button></center>
 	</div>
 </div>
 
@@ -99,6 +100,8 @@
 <script>
 	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+	
+	var girl_count = 3;
 	
 	$('#search-girls').submit(function(e) {
         e.preventDefault();
@@ -113,6 +116,19 @@
                 $('.girls-row').html(response);
 			}
 		});
+    });
+    
+    $('#show-more').click(function() {
+		$.ajax({
+            type: "POST",
+            url: 'php/load-more.php',
+            data:  {from: girl_count, to: girl_count + 3},
+            success: function(response){
+                $('.girls-row').append(response);
+			}
+		});
+		
+		girl_count += 3;
     });
 </script>
 </body>
