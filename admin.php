@@ -29,11 +29,6 @@
 			<hr>
 			<ul class="nav nav-pills flex-column" style="height: 100vh !important">
 				<li class="nav-item" role="presentation">
-					<a href="#dashboard" class="nav-link nav-tab-db" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard-tab-pane" type="button" role="tab" aria-controls="dashboard-tab-pane" aria-selected="true">
-						<i class="icon-gauge-1"></i> Dashboard
-					</a>
-				</li>
-				<li class="nav-item" role="presentation">
 					<a href="#clients" class="nav-link nav-tab-cl" id="clients-tab" data-bs-toggle="tab" data-bs-target="#clients-tab-pane" type="button" role="tab" aria-controls="clients-tab-pane" aria-selected="true">
 						<i class="icon-male"></i> Clients
 					</a>
@@ -54,17 +49,13 @@
 
 	<main class="col-9">
 		<div class="tab-content container-fluid" id="myTabContent">
-			<div class="tab-pane fade" id="dashboard-tab-pane" role="tabpanel" aria-labelledby="dashboard-tab" tabindex="0">
-				<h1 class="display-4 text-center m-3">Visitance</h1>
-				<canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" style="display: block; width: 1090px; height: 460px;" width="1090" height="460"></canvas>
-			</div>
-			<div class="tab-pane fade" id="clients-tab-pane" role="tabpanel" aria-labelledby="clients-tab" tabindex="1">
+			<div class="tab-pane fade" id="clients-tab-pane" role="tabpanel" aria-labelledby="clients-tab" tabindex="0">
 				<h1 class="display-4 text-center m-3">Clients</h1>
 				<div class="">
 					
 				</div>
 			</div>
-			<div class="tab-pane fade" id="accounts-tab-pane" role="tabpanel" aria-labelledby="accounts-tab" tabindex="2">
+			<div class="tab-pane fade" id="accounts-tab-pane" role="tabpanel" aria-labelledby="accounts-tab" tabindex="1">
 				<h1 class="display-4 text-center m-3">Female accounts</h1>
 				<center><button class="btn btn-info btn-lg mb-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="icon-search"></i> Search</button>
 				<button class="btn btn-success btn-lg mb-4" data-bs-toggle="modal" data-bs-target="#createModal">+ Create</button></center>
@@ -91,7 +82,7 @@
 											<i>'.$acc['nickname'].'</i>
 										</div>
 										<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="border-radius: 0; background-image: url(php/images/'.$acc['img'].')">
-											&nbsp;
+											
 										</div></a>
 										<div class="d-flex">
 											<button onclick="editor_id('.$acc['unique_id'].')" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-warning flex-fill" style="border-radius: 0 0 0 5px">Edit</button>
@@ -106,7 +97,7 @@
 				</div>
 				<center><button class="btn btn-primary m-3" id="show-more">Show more</button></center>
 			</div>
-			<div class="tab-pane fade" id="stickers-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="3">
+			<div class="tab-pane fade" id="stickers-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="2">
 				<h1 class="display-4 text-center m-3">Stickers</h1>
 				<center><button class="btn btn-success btn-lg mb-4" data-bs-toggle="modal" data-bs-target="#stickersModal">+ Add</button></center>
 				<div class="row stickers-div">
@@ -159,7 +150,7 @@
 							<div class="input-group mb-3 field input">
 								<span class="input-group-text" id="basic-addon1">Country</span>
 								<select name="country" class="form-control" aria-label="Country" aria-describedby="basic-addon1" required>
-									<option disabled selected></option>
+									<option selected></option>
 									<option disabled>-- Select country --</option>
 									<?php
 										
@@ -194,8 +185,8 @@
 								</select>
 							</div>
 							<div class="input-group mb-3 field image">
-								<span class="input-group-text" id="basic-addon1">Photos</span>
-								<input type="file" name="photos[]" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1" multiple required>
+								<span class="input-group-text" id="basic-addon1">Avatar</span>
+								<input type="file" name="photos" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1" required>
 							</div>
 							<div class="input-group mb-3 field image">
 								<span class="input-group-text" id="basic-addon1">About</span>
@@ -262,6 +253,10 @@
 									<option>Divorced</option>
 									<option>In Active</option>
 								</select>
+							</div>
+							<div class="input-group mb-3 field image">
+								<span class="input-group-text" id="basic-addon1">Avatar</span>
+								<input type="file" name="avatar" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1">
 							</div>
 							<label class="">Photos</label>
 							<div class="row p-2 my-2 photos-row">
@@ -368,11 +363,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
 </script><script src="dashboard/dashboard.js"></script>
 <script>
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 	process_hash();
-
-	$('.nav-tab-db').click(function() {
-		window.location.hash = "dashboard";
-	});
 	
 	$('.nav-tab-cl').click(function() {
 		window.location.hash = "clients";
@@ -392,53 +385,35 @@
 		
 	function process_hash() {
 		switch(window.location.hash) {			
-			case "#clients":
-				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
+			default:
 				$('#clients-tab-pane').attr("class", "tab-pane fade show active");
 				$('#accounts-tab-pane').attr("class", "tab-pane fade");
 				$('#stickers-tab-pane').attr("class", "tab-pane fade");
 				
-				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
 				$('#clients-tab').attr("class", "nav-link nav-tab-cl active");
 				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
 				$('#stickers-tab').attr("class", "nav-link nav-tab-st");
 				break;
 			
 			case "#accounts":
-				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
 				$('#clients-tab-pane').attr("class", "tab-pane fade");
 				$('#accounts-tab-pane').attr("class", "tab-pane fade show active");
 				$('#stickers-tab-pane').attr("class", "tab-pane fade");
 				
-				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
 				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
 				$('#accounts-tab').attr("class", "nav-link nav-tab-ac active");
 				$('#stickers-tab').attr("class", "nav-link nav-tab-st");
 				break;
 			
 			case "#stickers":
-				$('#dashboard-tab-pane').attr("class", "tab-pane fade");
 				$('#clients-tab-pane').attr("class", "tab-pane fade");
 				$('#accounts-tab-pane').attr("class", "tab-pane fade");
 				$('#stickers-tab-pane').attr("class", "tab-pane fade show active");
 				
-				$('#dashboard-tab').attr("class", "nav-link nav-tab-db");
 				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
 				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
 				$('#stickers-tab').attr("class", "nav-link nav-tab-st active");
 				break;		
-				
-			default:
-				$('#dashboard-tab-pane').attr("class", "tab-pane fade show active");
-				$('#clients-tab-pane').attr("class", "tab-pane fade");
-				$('#accounts-tab-pane').attr("class", "tab-pane fade");
-				$('#stickers-tab-pane').attr("class", "tab-pane fade");
-				
-				$('#dashboard-tab').attr("class", "nav-link active nav-tab-db");
-				$('#clients-tab').attr("class", "nav-link nav-tab-cl");
-				$('#accounts-tab').attr("class", "nav-link nav-tab-ac");
-				$('#stickers-tab').attr("class", "nav-link nav-tab-st");
-				break;
 		}
 	}
 	

@@ -20,7 +20,7 @@
 			
 			$countries = file_get_contents('../countries.txt');
 			$arr = explode("\n", $countries);
-			$countries = "";
+			$countries = "<option></option>";
 			for($i = 0; $i < count($arr) - 1; $i++) {
 				if($arr[$i] != $profile->country){
 					$countries .= '<option>'.$arr[$i].'</option>';

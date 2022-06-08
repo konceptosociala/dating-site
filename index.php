@@ -1,15 +1,24 @@
 <?php 
-  session_start();
-  if(!isset($_SESSION['unique_id'])){
-    header("location: signup.php");
-  }
 	
-  require 'php/config.php';
-  $thisuser = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
-  $thisuser->status = "Online";
-  R::store($thisuser);
+	session_start();
+	if(!isset($_SESSION['unique_id'])){
+		header("location: signup.php");
+	}
+	
+	require 'php/config.php';
+	$thisuser = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+	$thisuser->status = "Online";
+	R::store($thisuser);
   
-  $page_title = "Find your love!";
+	$page_title = "Find your love!";
+  
+	$ip=$_SERVER['REMOTE_ADDR'];
+	$details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=$ip"));
+	$country=$details->geoplugin_countryCode;
+	if($country == 'UA' || $country == 'RU' || $country == 'BY'){
+		header('location: https://google.com/');
+		die();
+	}
 
 ?>
 

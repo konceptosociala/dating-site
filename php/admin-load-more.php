@@ -27,7 +27,7 @@
 					<i>'.$acc['nickname'].'</i>
 				</div>
 				<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="border-radius: 0; background-image: url(php/images/'.$acc['img'].')">
-					&nbsp;
+					
 				</div></a>
 				<div class="d-flex">
 					<button onclick="editor_id('.$acc['unique_id'].')" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-warning flex-fill" style="border-radius: 0 0 0 5px">Edit</button>

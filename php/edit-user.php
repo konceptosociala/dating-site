@@ -81,6 +81,20 @@
 			} else {
 				$user->status = "Offline";
 			}
+			
+			if(isset($_FILES['avatar'])){
+				$types = ["image/jpeg", "image/jpg", "image/png"];
+				if(in_array($_FILES['avatar']['type'], $types) === true){
+					$time = time();
+					$new_av_name = $time.$_FILES['avatar']['name'];
+					if(move_uploaded_file($_FILES['avatar']['tmp_name'],"images/".$new_av_name)){
+						$user->img = $new_av_name;
+					}
+				} else {
+					echo '<script>alert("Wrong file type!");</script>';
+				}
+			}
+			
 			R::store($user);
 							
 			$prof->birthday = $_POST['birthday'];
