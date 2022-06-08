@@ -101,7 +101,7 @@
 			';
 		}
 				
-		echo '<div class="key" value="'.Encipher($query_send, 'dating13').'"></div>';
+		echo '<div class="key fixed-top" value="'.Encipher($query_send, 'datingkey').'"></div>';
 	}
     
 ?>

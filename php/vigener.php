@@ -10,10 +10,6 @@ function Cipher($input, $key, $encipher)
 {
 	$keyLen = strlen($key);
 
-	/*for ($i = 0; $i < $keyLen; ++$i)
-		if (!ctype_alpha($key[$i]))
-			return ""; // Error*/
-
 	$output = "";
 	$nonAlphaCharCount = 0;
 	$inputLen = strlen($input);

@@ -4,8 +4,7 @@
     include "vigener.php";
     
     $from = $_POST['from'];
-	$query = Decipher($_POST['key'], 'dating13');
-    echo $query;
+	$query = Decipher($_POST['key'], 'datingkey');
     
     if($query != ''){
 		$girls = R::getAll($query." LIMIT 3 OFFSET {$from}");

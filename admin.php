@@ -487,6 +487,7 @@
 				} else {
 					$('.girl-card').remove();
 					$('.girl-cards-div').append(response);
+					$('#show-more').hide();
 				}
 			}
 		});
@@ -579,6 +580,26 @@
 			}
 		});
 	}
+	
+	var girl_count = 3;
+	
+	$('#show-more').click(function() {
+		$.ajax({
+			type: "POST",
+			url: 'php/admin-load-more.php',
+			data:  {from: girl_count},
+			success: function(response){
+				$('.girl-cards-div').append(response);
+			}
+		});
+		girl_count += 3;
+		timer = 0;
+		$.ajax({
+			type: 'POST',
+			url: "php/set-online.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+		});	
+    });
 
 </script>
 </body>
