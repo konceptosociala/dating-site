@@ -13,6 +13,10 @@
             $msg_t->msg_type = "text";
             R::store($msg_t);
             
+            $nots = R::dispense('notifications');
+            $nots->adresant_id = $outgoing_id;
+            $nots->adresat_id = $incoming_id;
+            R::store($nots);
         }
     }else{
         header("location: ../login");

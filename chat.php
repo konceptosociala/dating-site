@@ -158,6 +158,35 @@
 		}
 	}
 	
+	var notData = "";
+	
+	$.ajax({
+		type: 'POST',
+		url: "php/remove-nots.php",
+		data: {adresant_id: "<?php echo $kunparolanto->unique_id; ?>", adresat_id: "<?php echo $_SESSION['unique_id']; ?>"},
+		success: function(r) {
+			$('.nots').html('<i class="icon-chat"></i> Chat');
+		}
+	});
+	
+	setInterval(check_notify, 1000);
+            
+	function check_notify(){
+		$.ajax({
+			type: 'POST',
+			url: "php/check-notification.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+			success: function(r) {
+				if(notData !== r && r !== '<i class="icon-chat"></i> Chat'){
+					$('.nots').html(r);
+					$('#sound').html('');
+					$('#sound').html('<audio autoplay="autoplay"><source src="notification.mp3" type="audio/mpeg"></audio>');
+				}
+				notData = r;
+			}
+		});
+	}
+	
 </script>
 </body>
 </html>

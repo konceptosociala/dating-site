@@ -10,6 +10,8 @@
                 WHERE (outgoing_msg_id = {$outgoing_id} AND incoming_msg_id = {$incoming_id})
                 OR (outgoing_msg_id = {$incoming_id} AND incoming_msg_id = {$outgoing_id}) ORDER BY messages.id");
         if(!empty($sql)){
+			$nots = R::find('notifications', 'adresat_id = ? AND adresant_id = ?', [$outgoing_id, $incoming_id]);
+			R::trashAll($nots);
 			for($ir = 0; $ir < count($sql); $ir++){
 				$row = $sql[$ir];
                 if($row['outgoing_msg_id'] === $outgoing_id){

@@ -30,6 +30,11 @@
 					$msg->msg = 'php/images/'.$new_img_name;
 					$msg->msg_type = "image";
 					R::store($msg);
+					
+					$nots = R::dispense('notifications');
+					$nots->adresant_id = $_SESSION['unique_id'];
+					$nots->adresat_id = $_POST['adresat'];
+					R::store($nots);
 				}				
 			} else {
 				echo '<script>alert("Wrong file type!");</script>';

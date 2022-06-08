@@ -15,6 +15,11 @@
 			$msg->msg = 'php/images/stickers/'.$sticker->img;
 			$msg->msg_type = "sticker";
 			R::store($msg);
+			
+			$nots = R::dispense('notifications');
+            $nots->adresant_id = $_POST['ant_userid'];
+            $nots->adresat_id = $_POST['at_userid'];
+            R::store($nots);
 		}
 	}
 		
