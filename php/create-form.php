@@ -83,7 +83,7 @@
 								$girl->unique_id = $ran_id;
 								$girl->type = "female";
 								$girl->confirm = true;
-								$girl->status = "Online";
+								$girl->status = "Offline";
 								$girl->email = $email;
 								$girl->password = md5($passwd);
 								$girl->img = $new_img_name;

@@ -1,6 +1,9 @@
 <?php
     session_start();
     require "config.php";
+    include "vigener.php";
+    
+    $query_send = "";
     
     if($_POST['id'] != ''){
 		$girls = R::getAll("SELECT * FROM users INNER JOIN profiles ON profiles.user_id=users.unique_id WHERE type = 'female' AND unique_id = '{$_POST['id']}';");
@@ -31,9 +34,7 @@
 					</div></a>
 				</div>
 			</div>
-			';
-			
-			file_put_contents("../query", "");
+			';			
 		}
 	} else {
 		$date_to = date('Y');
@@ -67,7 +68,7 @@
 			$query .= " AND haircolor = '".$_POST['haircolor']."'";
 		}
 		
-		file_put_contents("../query", $query);
+		$query_send = $query;		
 		$query .= " LIMIT 3 OFFSET 0;";
 		$girls = R::getAll($query);
 		if(empty($girls)) echo "<center><h3>No users found!</h3></center>";
@@ -99,6 +100,8 @@
 			</div>
 			';
 		}
+				
+		echo '<div class="key" value="'.Encipher($query_send, 'dating13').'"></div>';
 	}
     
 ?>

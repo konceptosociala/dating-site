@@ -13,6 +13,9 @@
 		header("location: /");
 	}
 	
+	$check_root->status = "Online";
+	R::store($check_root);
+	
 ?>
 
 
@@ -69,7 +72,7 @@
 						
 						<?php
 						
-							$girls = R::getAll("SELECT * FROM users WHERE type = 'female'");
+							$girls = R::getAll("SELECT * FROM users WHERE type = 'female' LIMIT 3;");
 							if(empty($girls)) echo "<center><h3>You haven't created any accounts yet</h3></center>";
 							for($i = 0; $i < count($girls); $i++) {	
 								$acc = $girls[$i];					
@@ -101,6 +104,7 @@
 						
 						?>						
 				</div>
+				<center><button class="btn btn-primary m-3" id="show-more">Show more</button></center>
 			</div>
 			<div class="tab-pane fade" id="stickers-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="3">
 				<h1 class="display-4 text-center m-3">Stickers</h1>
@@ -275,6 +279,8 @@
 								<span class="input-group-text" id="basic-addon1">Wishes</span>
 								<textarea id="f-wishes" name="wishes" placeholder="Describe personal wishes" class="form-control" aria-describedby="basic-addon1"></textarea>
 							</div>
+							<label>Online</label>
+							<input type="checkbox" name="is-online" class="" aria-describedby="basic-addon1">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -524,12 +530,12 @@
                 $('#f-name').attr("value", data.name);
                 $('#f-nickname').attr("value", data.nickname);
                 $('#f-birthday').attr("value", data.birthday);
-                $('#f-country').append(data.country);
-                $('#f-haircolor').append(data.haircolor);
-                $('#f-marital').append(data.marital);
-                $('#f-about').append(data.about);
-                $('#f-wishes').append(data.wishes);
-                $('.photos-row').append(data.photo_div);
+                $('#f-country').html(data.country);
+                $('#f-haircolor').html(data.haircolor);
+                $('#f-marital').html(data.marital);
+                $('#f-about').html(data.about);
+                $('#f-wishes').html(data.wishes);
+                $('.photos-row').html(data.photo_div);
 			}
 		});
 	}

@@ -5,6 +5,11 @@
   }
 	
   require 'php/config.php';
+  $thisuser = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+  $thisuser->status = "Online";
+  R::store($thisuser);
+  
+  $page_title = "Find your love!";
 
 ?>
 
@@ -119,6 +124,12 @@
 		});
 		is_search = true;
 		girl_count = 3;
+		timer = 0;
+		$.ajax({
+			type: 'POST',
+			url: "php/set-online.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+		});
     });
     
     $('#show-more').click(function() {
@@ -132,21 +143,48 @@
 				}
 			});
 			girl_count += 3;
+			timer = 0;
+			$.ajax({
+				type: 'POST',
+				url: "php/set-online.php",
+				data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+			});
 		} else {
 			$.ajax({
 				type: "POST",
 				url: 'php/load-more-search.php',
-				data:  {from: girl_count},
+				data:  {from: girl_count, key: $('.key').attr("value")},
 				success: function(response){
 					$('.girls-row').append(response);
 				}
 			});
 			girl_count += 3;
+			timer = 0;
+			$.ajax({
+				type: 'POST',
+				url: "php/set-online.php",
+				data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+			});
 		}
 		
 		
     });
+    
+    var timer = 0;
+    var interval = setInterval(startTimer, 1000);
+    
+    function startTimer() {
+		++timer;
+		if(timer == 120) {
+			clearInterval(interval);
+			$.ajax({
+				type: 'POST',
+				url: "php/set-offline.php",
+				data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+			});
+		}
+	}
+	
 </script>
 </body>
 </html>
-

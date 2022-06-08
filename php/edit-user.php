@@ -76,6 +76,11 @@
 								
 			$user->name = $_POST['name'];
 			$user->nickname = $_POST['nickname'];
+			if(isset($_POST['is-online']) && $_POST['is-online'] == 'on'){
+				$user->status = "Online";
+			} else {
+				$user->status = "Offline";
+			}
 			R::store($user);
 							
 			$prof->birthday = $_POST['birthday'];

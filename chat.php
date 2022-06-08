@@ -16,6 +16,11 @@
 	if(!isset($kunparolanto) || $kunparolanto->type == $checkuser->type) {
 		header("location: /");
     }
+    
+	$checkuser->status = "Online";
+	R::store($checkuser);
+	
+	$page_title = "Сhat with ".$kunparolanto->name;
 ?>
 <?php include_once "tml/header.php"; ?>
 <div style="height:80% !important">
@@ -36,7 +41,7 @@
 		  <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#stickersModal" id="button-addon2"><i class="icon-sticky-note"></i></a>
 		  <a class="btn btn-outline-danger" onclick="get_file()" id="button-addon2"><i class="icon-picture"></i></a>
 		  <textarea type="text" style="resize:none; height: 40px" name="message" class="input-field form-control" aria-label="Type a message here..." placeholder="Type a message here..." autocomplete="off" aria-describedby="button-addon2"></textarea>
-		  <button class="btn btn-outline-danger" type="button" id="button-addon2"><i class="icon-paper-plane"></i></button>
+		  <button class="btn btn-outline-danger" onclick="null_timer()" type="button" id="button-addon2"><i class="icon-paper-plane"></i></button>
 		</div>
       </form>
       <form id="file-load-form" action="" method="POST" enctype="multipart/form-data" autocomplete="off" >
@@ -83,6 +88,18 @@
 <script src="/javascript/emojiarea/jquery.emojiarea.js"></script>
 <script src="javascript/chat.js"></script>
 <script>
+	var timer = 0;
+    
+    function null_timer(){
+		alert(12);
+		timer = 0;
+		$.ajax({
+			type: 'POST',
+			url: "php/set-online.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+		});
+	}
+	
 	function send_sticker(name) {
 		$.ajax({
             type: "POST",
@@ -91,6 +108,12 @@
             success: function(){
                 
 			}
+		});
+		timer = 0;
+		$.ajax({
+			type: 'POST',
+			url: "php/set-online.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
 		});
 	}
 	
@@ -106,6 +129,12 @@
             success: function(response){
 			}
 		});
+		timer = 0;
+		$.ajax({
+			type: 'POST',
+			url: "php/set-online.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+		});
     });
 	
 	function get_file() {
@@ -115,6 +144,20 @@
 	document.getElementById("upfile").onchange = function() {
 		document.getElementById("file-submit").click();
 	};
+	
+	var interval = setInterval(startTimer, 1000);
+    
+    function startTimer() {
+		++timer;
+		if(timer == 120) {
+			$.ajax({
+				type: 'POST',
+				url: "php/set-offline.php",
+				data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+			});
+		}
+	}
+	
 </script>
 </body>
 </html>

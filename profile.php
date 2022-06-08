@@ -9,6 +9,8 @@
 	
 	$acc_type = "";
 	
+	$page_title = "Profile";
+	
 	$vtor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
 	if(isset($_GET['send']) && $vtor->confirm == false) {
 		$token = R::findOne('tokens', 'user_id = ?', [$vtor->unique_id]);
@@ -35,6 +37,7 @@
 					header("location: /");
 				} else {
 					$acc_type = "person";
+					$page_title = "Profile of ".$acc->name;
 					$prof = R::findOne('profiles', 'user_id = ?', [$_GET['id']]);
 				}
 			} else {
@@ -50,12 +53,17 @@
 			$acc = R::findOne('users', 'unique_id = ?', [$_GET['id']]);
 			if(isset($acc)){
 				$acc_type = "person";
+				$page_title = "Profile of ".$acc->name;
 				$prof = R::findOne('profiles', 'user_id = ?', [$_GET['id']]);
 			} else {
 				header("location: /");
 			}
 		}
 	}
+	
+	$thisuser = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+    $thisuser->status = "Online";
+    R::store($thisuser);
 	
 	if(isset($_GET['favorite']) && $_GET['favorite'] != '' && $_GET['favorite'] != $_SESSION['unique_id']){
 		$checkuser = R::findOne('favorites', 'fav_id = ? AND user_id = ?', [$_GET['favorite'], $_SESSION['unique_id']]);
@@ -408,6 +416,20 @@
 	
 	function photo_view(path) {
 		$('.viewer-img').attr("src", "php/images/" + path);
+	}
+	
+	var timer = 0;
+    var interval = setInterval(startTimer, 1000);
+    
+    function startTimer() {
+		++timer;
+		if(timer == 120) {
+			$.ajax({
+				type: 'POST',
+				url: "php/set-offline.php",
+				data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+			});
+		}
 	}
 </script>
 </body>
