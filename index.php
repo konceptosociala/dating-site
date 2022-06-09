@@ -37,7 +37,7 @@
 				<div class="input-group mb-3 col-1">
 				  <span class="input-group-text sbg-bg border-bg text-white" id="basic-addon1">Country</span>
 				  <select name="country" class="form-control" aria-label="Country" aria-describedby="basic-addon1">
-					<option selected disabled>-- Select country --</option>
+					<option selected>-- Select country --</option>
 					<?php
 										
 						$countries = file_get_contents('countries.txt');
@@ -52,7 +52,7 @@
 				<div class="input-group mb-3">
 				  <span class="input-group-text sbg-bg border-bg text-white" id="basic-addon1">Hair Color</span>
 				  <select name="haircolor" class="form-control" aria-label="Country" aria-describedby="basic-addon1">
-					<option selected disabled>-- Select color --</option>
+					<option selected>-- Select color --</option>
 					<option>Blonde</option>
 					<option>Brunette</option>
 					<option>Red</option>
@@ -73,7 +73,7 @@
 		<div class="row girls-row">
 			<?php
 						
-				$girls = R::getAll("SELECT * FROM users WHERE type = 'female' LIMIT 0, 3");
+				$girls = R::getAll("SELECT * FROM users WHERE type = 'female' LIMIT 0, 12");
 				for($i = 0; $i < count($girls); $i++) {	
 					$acc = $girls[$i];					
 					$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);
@@ -86,26 +86,45 @@
 					} else {
 						$status = '<p class="card-text text-secondary">Offline</h5>';
 					}		
-											
-					echo 
-					'
-					<div class="col-lg-3 col-md-6 col-sm-12 my-3">
-						<div class="card mx-2">
-							<div class="card-body">
-								<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5></div>
-								'.$status.'
+					
+					if($thisuser->confirm == true){
+						echo 
+						'
+						<div class="col-lg-3 col-md-6 col-sm-12 my-3">
+							<div class="card mx-2">
+								<div class="card-body">
+									<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5></div>
+									'.$status.'
+								</div>
+								<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="border-radius: 0; background-image: url(php/images/'.$acc['img'].')">
+									&nbsp;
+								</div></a>
+								<a href="chat?id='.$acc['unique_id'].'" class="btn btn-success" style="border-radius: 0 0 5px 5px">Chat</a>
 							</div>
-							<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="background-image: url(php/images/'.$acc['img'].')">
-								&nbsp;
-							</div></a>
 						</div>
-					</div>
-					';
+						';
+					} else {
+						echo 
+						'
+						<div class="col-lg-3 col-md-6 col-sm-12 my-3">
+							<div class="card mx-2">
+								<div class="card-body">
+									<div class="d-flex"><h5 class="card-title">'.$acc['name'].', '.$diff->y.'</h5></div>
+									'.$status.'
+								</div>
+								<a title="View profile of '.$acc['name'].'" href="profile?id='.$acc['unique_id'].'"><div class="card-field" style="border-radius: 0; background-image: url(php/images/'.$acc['img'].')">
+									&nbsp;
+								</div></a>
+								<a onclick="alert(\'Confirm email to start chatting!\')" class="btn btn-success" style="border-radius: 0 0 5px 5px">Chat</a>
+							</div>
+						</div>
+						';
+					}
 				}
 				
 			?>
 		</div>
-		<center><button class="btn btn-primary m-3" id="show-more">Show more</button></center>
+		<center class="mb-5"><button class="btn btn-primary m-3 mb-5" id="show-more">Show more</button></center>
 	</div>
 </div>
 
@@ -115,7 +134,7 @@
 	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 	
-	var girl_count = 3;
+	var girl_count = 12;
 	var is_search = false;
 	
 	$('#search-girls').submit(function(e) {
@@ -132,7 +151,7 @@
 			}
 		});
 		is_search = true;
-		girl_count = 3;
+		girl_count = 12;
 		timer = 0;
 		$.ajax({
 			type: 'POST',
@@ -151,7 +170,7 @@
 					$('.girls-row').append(response);
 				}
 			});
-			girl_count += 3;
+			girl_count += 12;
 			timer = 0;
 			$.ajax({
 				type: 'POST',
@@ -167,7 +186,7 @@
 					$('.girls-row').append(response);
 				}
 			});
-			girl_count += 3;
+			girl_count += 12;
 			timer = 0;
 			$.ajax({
 				type: 'POST',

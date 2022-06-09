@@ -31,7 +31,7 @@
 	}
 ?>
 <?php include_once "tml/header.php"; ?>
-<div style="height:80% !important">
+<div style="height:70vh !important; margin-top: 5vh">
   <div class="wrapper d-flex flex-column col-lg-4 col-md-6 col-sm-12 m-auto">	
       <header class="d-flex">
         <a title="User's profile" href="/profile?id=<?php echo $_GET['id']; ?>"><img class="m-3" width=50 height=50 src="php/images/<?php echo $kunparolanto['img']; ?>" alt=""></a>
@@ -141,6 +141,7 @@
 			cache: false,
 			processData: false,
             success: function(response){
+				$('body').append(response);
 			}
 		});
 		timer = 0;

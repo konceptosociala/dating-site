@@ -4,7 +4,7 @@
     
     $from = $_POST['from'];
        
-    $girls = R::getAll("SELECT * FROM users WHERE type = 'male' LIMIT 3 OFFSET {$from}");
+    $girls = R::getAll("SELECT * FROM users WHERE type = 'male' LIMIT 12 OFFSET {$from}");
     for($i = 0; $i < count($girls); $i++) {	
 		$acc = $girls[$i];					
 		$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);

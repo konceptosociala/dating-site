@@ -89,7 +89,7 @@
 									
 									$to      = $email;
 									$subject = 'Dating mail confirmation';
-									$message = 'Confirm your account email by the URL: localhost/activate?token='.$confirm_token;
+									$message = 'Confirm your account email by the URL: <a href="https://dating-test12.000webhostapp.com/activate?token='.$confirm_token.'">https://dating-test12.000webhostapp.com/activate?token='.$confirm_token.'</a>';
 									$headers = 'From: dating@localhost' . "\r\n" .
 										'Reply-To: dating@localhost' . "\r\n" .
 										'X-Mailer: PHP/' . phpversion();

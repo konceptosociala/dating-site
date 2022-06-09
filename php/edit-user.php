@@ -27,7 +27,7 @@
 		} else if($diff->y < 18){
 			echo '<script>alert("Entered date is invalid!")</script>';
 		} else {	
-			if(!empty($_FILES['photos']['name'][0])){	
+			if($_FILES['photos']['name'][0]){	
 				$img_name = $_FILES['photos']['name'];
 				$img_type = $_FILES['photos']['type'];
 				
@@ -69,7 +69,7 @@
 						}
 					}
 				}
-			}
+			} 
 		
 			$user = R::findOne('users', 'unique_id = ?', [$_POST['hidden-id']]);
 			$prof = R::findOne('profiles', 'user_id = ?', [$user->unique_id]);
@@ -82,7 +82,7 @@
 				$user->status = "Offline";
 			}
 			
-			if(isset($_FILES['avatar'])){
+			if($_FILES['avatar']['name']){
 				$types = ["image/jpeg", "image/jpg", "image/png"];
 				if(in_array($_FILES['avatar']['type'], $types) === true){
 					$time = time();
@@ -93,7 +93,7 @@
 				} else {
 					echo '<script>alert("Wrong file type!");</script>';
 				}
-			}
+			} 
 			
 			R::store($user);
 							

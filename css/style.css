@@ -4,6 +4,19 @@
 	margin: 0;
 }
 
+body {
+	box-sizing: border-box !important;
+	max-width: 100% !important;
+}
+
+body {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+body::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
 .remove-photo-b {
 	position: absolute;
 	margin-top: -50px;
@@ -89,6 +102,7 @@
 	background-image: url("https://i.pinimg.com/originals/76/f2/3e/76f23ef08dc1ebabf4589ca0daa1fc14.jpg");
 	background-position: bottom;
 	background-attachment: fixed;
+	background-size: 125%;
 }
 
 
@@ -146,6 +160,7 @@
   display: flex;
   margin-top: -100px;
   background:white;
+  border-radius: 20px;
 }
 
 .emoji-selector li { margin: 5px; }
@@ -155,13 +170,22 @@
   height: 200px;
   overflow-y: scroll;
   padding: 3px;
-  margin-top: -245px;
+  margin-top: -275px;
   background:white;
+  border-radius: 20px;
 }
 
 .chat-box {
 	background: #cfc0c0;
-	height: 60vh;
+	height: 50vh;
+	box-sizing: border-box !important;
+}
+
+@media screen and (max-height: 600px) {
+	.chat-box {
+		height: 45vh;
+		box-sizing: border-box !important;
+	}
 }
 
 .chat {

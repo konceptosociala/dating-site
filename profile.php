@@ -156,7 +156,7 @@
 				</div>
 				<div class="d-flex flex-column col-6 col-lg-5 col-sm-6">
 					<div class="container">
-						<h1 style="word-break: break-all;"><?php echo $acc->nickname; ?> <?php if($acc_type == 'person') echo '<a href=?favorite='.$acc->unique_id.' class="text-decoration-none icon-star-empty text-warning" title="Add to favorites"></a>'; ?></h1>
+						<h1 style="word-break: break-all;"><?php echo $acc->nickname; ?> <?php if($acc_type == 'person') echo '<a href=?favorite='.$acc->unique_id.' class="text-decoration-none icon-star-empty text-warning" title="Add to favorites"></a>'; ?><?php if(R::findOne('favorites', 'fav_id = ? AND user_id = ?', [$acc->unique_id, $_SESSION['unique_id']])) echo '<span class="text-warning" style="font-size: 25px; vertical-align: middle">Added!</span>'; ?></h1>
 						<p>Profile ID: <?php echo $acc->unique_id; ?></p>
 					</div>
 					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
@@ -366,7 +366,7 @@
 			</div>
 		</div>
 		<!-- Photo viewer -->
-		<div class="modal fade" id="photoViewer" tabindex="-1" aria-labelledby="photoViewerLabel" aria-hidden="true">
+		<div class="modal modal-lg fade" id="photoViewer" tabindex="-1" aria-labelledby="photoViewerLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="modal-content">
 					<div class="modal-header">

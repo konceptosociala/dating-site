@@ -21,7 +21,7 @@
     <section class="form login p-3">
       <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
         <h2 class="text-center pb-2">Log in</h2>	  
-		<div class="error-text text-center pb-2"></div>
+		<div class="error-text text-center pb-2 text-danger"></div>
         <div class="input-group mb-3 field input">
 		  <span class="input-group-text" id="basic-addon1">Email</span>
 		  <input type="email" name="email" class="form-control" placeholder="Enter your email" aria-label="Email" aria-describedby="basic-addon1" required>

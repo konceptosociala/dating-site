@@ -22,7 +22,7 @@
 		<section class="form signup p-3">
 		  <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
 			  <h2 class="text-center pb-2">Registration</h2>	  
-			  <div class="error-text text-center pb-2"></div>
+			  <div class="error-text text-center pb-2 text-danger"></div>
 			  <div class="input-group mb-3 field input">
 			    <span class="input-group-text" id="basic-addon1">Name</span>
 			    <input type="text" name="name" class="form-control" placeholder="Enter your name" aria-label="First name" aria-describedby="basic-addon1" required>

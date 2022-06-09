@@ -29,7 +29,7 @@
 
 <?php include_once "tml/noheader.php"; ?>
 <section class="row">
-    <header class="col-3">
+    <header class="col-5 col-lg-3 col-md-4 col-sm-5">
 		<div class="p-4 bg-light">
 			<a href="/admin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
 				<span class="fs-4"><i class="icon-wrench"></i> Admin Panel</span>
@@ -55,7 +55,7 @@
 		</div>
     </header>
 
-	<main class="col-9">
+	<main class="col-7 col-lg-9 col-md-8 col-sm-7">
 		<div class="tab-content container-fluid" id="myTabContent">
 			<div class="tab-pane fade" id="clients-tab-pane" role="tabpanel" aria-labelledby="clients-tab" tabindex="0">
 				<h1 class="display-4 text-center m-3">Clients</h1>
@@ -66,7 +66,7 @@
 				<div class="row clients-row">
 					<?php
 					
-					$girls = R::getAll("SELECT * FROM users WHERE type = 'male' LIMIT 0, 3");
+					$girls = R::getAll("SELECT * FROM users WHERE type = 'male' LIMIT 0, 12");
 					for($i = 0; $i < count($girls); $i++) {	
 						$acc = $girls[$i];					
 						$prof = R::findOne('profiles', 'user_id = ?', [$acc['unique_id']]);
@@ -111,7 +111,7 @@
 						
 						<?php
 						
-							$girls = R::getAll("SELECT * FROM users WHERE type = 'female' LIMIT 3;");
+							$girls = R::getAll("SELECT * FROM users WHERE type = 'female' LIMIT 12;");
 							if(empty($girls)) echo "<center><h3>You haven't created any accounts yet</h3></center>";
 							for($i = 0; $i < count($girls); $i++) {	
 								$acc = $girls[$i];					
@@ -304,7 +304,7 @@
 							</div>
 							<div class="input-group mb-3 field image">
 								<span class="input-group-text" id="basic-addon1">Avatar</span>
-								<input type="file" name="avatar" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1">
+								<input type="file" name="avatar" id="f-avatar-in" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1">
 							</div>
 							<label class="">Photos</label>
 							<div class="row p-2 my-2 photos-row">
@@ -312,7 +312,7 @@
 							</div>
 							<div class="input-group mb-3 field image">
 								<span class="input-group-text" id="basic-addon1">Photos</span>
-								<input type="file" name="photos[]" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1" multiple>
+								<input type="file" name="photos[]" id="f-photos-in" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/jpg" aria-describedby="basic-addon1" multiple>
 							</div>
 							<div class="input-group mb-3 field image">
 								<span class="input-group-text" id="basic-addon1">About</span>
@@ -408,8 +408,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
-</script><script src="dashboard/dashboard.js"></script>
 <script>
 	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -560,6 +558,11 @@
                 $('#f-about').html(data.about);
                 $('#f-wishes').html(data.wishes);
                 $('.photos-row').html(data.photo_div);
+                
+                $('#f-photos-in').attr("type", "text");
+                $('#f-photos-in').attr("type", "file");
+                $('#f-avatar-in').attr("type", "text");
+                $('#f-avatar-in').attr("type", "file");
 			}
 		});
 	}
@@ -604,8 +607,8 @@
 		});
 	}
 	
-	var girl_count = 3;
-	var client_count = 3;
+	var girl_count = 12;
+	var client_count = 12;
 	
 	$('#show-more').click(function() {
 		$.ajax({
@@ -616,7 +619,7 @@
 				$('.girl-cards-div').append(response);
 			}
 		});
-		girl_count += 3;
+		girl_count += 12;
 		timer = 0;
 		$.ajax({
 			type: 'POST',
@@ -634,7 +637,7 @@
 				$('.clients-row').append(response);
 			}
 		});
-		client_count += 3;
+		client_count += 12;
 		timer = 0;
 		$.ajax({
 			type: 'POST',
