@@ -25,7 +25,8 @@
 	}
 ?>
 <?php include_once "tml/header.php"; ?>
-<div class="row" style="height:80% !important">
+<style>body {overflow-x: hidden}</style>
+<div class="row" style="height:80% !important;">
   <div class="wrapper container my-auto col-lg-6 col-md-8 col-sm-12">
     <section class="users">
       <header>
@@ -51,6 +52,9 @@
     </section>
   </div>
   </div>
+  <footer class="bg-dark d-flex justify-content-center align-items-center mt-5">
+	<p class="text-light m-3">Dating Website | <a class="text-light" href=about>About us</a></p>
+</footer>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
   <script src="javascript/users.js"></script>

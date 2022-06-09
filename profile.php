@@ -373,7 +373,7 @@
 						<h5 class="modal-title" id="photoViewerLabel">Photo viewer</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body d-flex justify-content-center">
 						<img class="viewer-img img-fluid" src="" alt="Not found">
 					</div>
 					<div class="modal-footer">
@@ -383,6 +383,9 @@
 			</div>
 		</div>
 	</main>
+	<footer class="bg-dark d-flex justify-content-center align-items-center mt-5">
+		<p class="text-light m-3">Dating Website | <a class="text-light" href=about>About us</a></p>
+	</footer>
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
