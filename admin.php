@@ -16,6 +16,14 @@
 	$check_root->status = "Online";
 	R::store($check_root);
 	
+	$ip=$_SERVER['REMOTE_ADDR'];
+	$details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=$ip"));
+	$country=$details->geoplugin_countryCode;
+	if($country == 'UA' || $country == 'RU' || $country == 'BY'){
+		header('location: https://google.com/');
+		die();
+	}
+	
 ?>
 
 

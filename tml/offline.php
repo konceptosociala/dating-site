@@ -2,7 +2,7 @@
 
 <script>
 	
-/*var _wasPageCleanedUp = false;
+var _wasPageCleanedUp = false;
 function pageCleanup()
 {
     if (!_wasPageCleanedUp)
@@ -14,29 +14,20 @@ function pageCleanup()
             success: function ()
             {
                 _wasPageCleanedUp = true;
-                console.log("123");
+                console.log(123);
             }
         });
     }
 }
 
-window.addEventListener('beforeunload', function (e) {
-    pageCleanup();
-    e.returnValue = '';
-});
 
 $(window).on("unload", function (e)
 {
     pageCleanup();
-    e.returnValue = '';
-});*/
+});
 
 window.addEventListener('offline', function(e) {
-	console.log('offline');
-});
-
-window.addEventListener('online', function(e) {
-	console.log('online'); 
-});
+	pageCleanup();
+});;
 
 </script>

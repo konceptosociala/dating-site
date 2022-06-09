@@ -181,10 +181,15 @@
     
     var timer = 0;
     var interval = setInterval(startTimer, 1000);
+    $.ajax({
+			type: 'POST',
+			url: "php/set-online.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+		});
     
     function startTimer() {
 		++timer;
-		if(timer == 120) {
+		if(timer == 45) {
 			clearInterval(interval);
 			$.ajax({
 				type: 'POST',
@@ -214,5 +219,6 @@
 	}
 	
 </script>
+<?php include 'tml/offline.php'; ?>
 </body>
 </html>

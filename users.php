@@ -15,6 +15,14 @@
   R::store($thisuser);
   
   $page_title = "Active chats";
+  
+  $ip=$_SERVER['REMOTE_ADDR'];
+	$details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=$ip"));
+	$country=$details->geoplugin_countryCode;
+	if($country == 'UA' || $country == 'RU' || $country == 'BY'){
+		header('location: https://google.com/');
+		die();
+	}
 ?>
 <?php include_once "tml/header.php"; ?>
 <div class="row" style="height:80% !important">
@@ -51,9 +59,15 @@
 	var timer = 0;
     var interval = setInterval(startTimer, 1000);
     
+    $.ajax({
+			type: 'POST',
+			url: "php/set-online.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+		});
+    
     function startTimer() {
 		++timer;
-		if(timer == 120) {
+		if(timer == 45) {
 			$.ajax({
 				type: 'POST',
 				url: "php/set-offline.php",

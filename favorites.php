@@ -12,6 +12,14 @@
   
   $page_title = "Favorites";
   
+	$ip=$_SERVER['REMOTE_ADDR'];
+	$details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=$ip"));
+	$country=$details->geoplugin_countryCode;
+	if($country == 'UA' || $country == 'RU' || $country == 'BY'){
+		header('location: https://google.com/');
+		die();
+	}
+  
 ?>
 
 
@@ -98,7 +106,7 @@
     
     function startTimer() {
 		++timer;
-		if(timer == 120) {
+		if(timer == 45) {
 			$.ajax({
 				type: 'POST',
 				url: "php/set-offline.php",
@@ -125,6 +133,12 @@
 			}
 		});
 	}
+	
+	$.ajax({
+			type: 'POST',
+			url: "php/set-online.php",
+			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
+		});
 </script>
 </body>
 </html>

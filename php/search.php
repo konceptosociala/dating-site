@@ -37,25 +37,24 @@
 			';			
 		}
 	} else {
-		$date_to = date('Y');
-		$date_to .= '-01-01';
+		$date_to = date('Y-m-d');
 		$date_from = date('Y-m-d');
     
 		$query = "SELECT * FROM users INNER JOIN profiles ON profiles.user_id=users.unique_id WHERE type = 'female'";
 		
 		if($_POST['age-from'] != '' && $_POST['age-to'] != ''){
 			$from = date('Y-m-d', strtotime($date_from. ' - '.$_POST['age-from'].' years'));
-			$to   = date('Y-m-d', strtotime($date_to. ' - '.$_POST['age-to'].' years'));
+			$to   = date('Y-m-d', strtotime($date_to. ' - '.$_POST['age-to'].' years - 1 years + 1 days'));
 
 			$query .= " AND birthday BETWEEN '".$to."' AND '".$from."'";
 		} else if($_POST['age-from'] != '') {
-			$from = date('Y-m-d', strtotime($date_from. ' - '.$_POST['age-from'].' years'));
+			$from = date('Y-m-d', strtotime($date_from. ' - '.$_POST['age-from'].' years - 1 years + 1 days'));
 			$to   = date('Y-m-d', strtotime($date_to. ' - 100 years'));
 
 			$query .= " AND birthday BETWEEN '".$to."' AND '".$from."'";
 		} else if($_POST['age-to'] != '') {
 			$from = date('Y-m-d', strtotime($date_from. ' - 18 years'));
-			$to   = date('Y-m-d', strtotime($date_to. ' - '.$_POST['age-to'].' years'));
+			$to   = date('Y-m-d', strtotime($date_to. ' - '.$_POST['age-to'].' years - 1 years + 1 days'));
 
 			$query .= " AND birthday BETWEEN '".$to."' AND '".$from."'";
 		}

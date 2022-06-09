@@ -5,6 +5,14 @@
   }
   
   $page_title = "Sign Up";
+  
+  $ip=$_SERVER['REMOTE_ADDR'];
+	$details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=$ip"));
+	$country=$details->geoplugin_countryCode;
+	if($country == 'UA' || $country == 'RU' || $country == 'BY'){
+		header('location: https://google.com/');
+		die();
+	}
 ?>
 
 <?php include_once "tml/noheader.php"; ?>
