@@ -3,7 +3,7 @@
 	include 'php/config.php';
 
 	session_start();
-	if(!isset($_SESSION['unique_id'])){
+	if(!isset($_SESSION['unique_id']) && !isset($_GET['id'])){
 		header("location: signup.php");
 	}
 	
@@ -11,20 +11,22 @@
 	
 	$page_title = "Profile";
 	
-	$vtor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
-	if(isset($_GET['send']) && $vtor->confirm == false) {
-		$token = R::findOne('tokens', 'user_id = ?', [$vtor->unique_id]);
-		$to      = $vtor->email;
-		$subject = 'Dating mail confirmation';
-		$message = 'Confirm your account email by the URL: localhost/activate?token='.$token->token;
-		$headers = 'From: dating@localhost' . "\r\n" .
-		    	   'Reply-To: dating@localhost' . "\r\n" .
-	     		   'X-Mailer: PHP/' . phpversion();
+	if(isset($_SESSION['unique_id'])){
+		$vtor = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+		if(isset($_GET['send']) && $vtor->confirm == false) {
+			$token = R::findOne('tokens', 'user_id = ?', [$vtor->unique_id]);
+			$to      = $vtor->email;
+			$subject = 'Dating mail confirmation';
+			$message = 'Confirm your account email by the URL: localhost/activate?token='.$token->token;
+			$headers = 'From: dating@localhost' . "\r\n" .
+					   'Reply-To: dating@localhost' . "\r\n" .
+					   'X-Mailer: PHP/' . phpversion();
 
-		mail($to, $subject, $message, $headers);
+			mail($to, $subject, $message, $headers);
+		}
 	}
 	
-	if(R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']])->type == 'male') {
+	if(isset($_SESSION['unique_id']) && R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']])->type == 'male') {
 		if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['unique_id']) {
 			$acc_type = "visitor";
 			$acc = $vtor;
@@ -45,7 +47,7 @@
 			}
 		}
 	} else {
-		if(!isset($_GET['id']) || $_GET['id'] == $_SESSION['unique_id']) {
+		if((!isset($_GET['id']) && isset($_SESSION['unique_id'])) || (isset($_SESSION['unique_id']) && $_GET['id'] == $_SESSION['unique_id'])) {
 			$acc_type = "selfgirl";
 			$acc = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
 			$prof = R::findOne('profiles', 'user_id = ?', [$_SESSION['unique_id']]);
@@ -61,9 +63,11 @@
 		}
 	}
 	
-	$thisuser = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
-    $thisuser->status = "Online";
-    R::store($thisuser);
+	if(isset($_SESSION['unique_id'])){
+		$thisuser = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+		$thisuser->status = "Online";
+		R::store($thisuser);
+	}
 	
 	if(isset($_GET['favorite']) && $_GET['favorite'] != '' && $_GET['favorite'] != $_SESSION['unique_id']){
 		$checkuser = R::findOne('favorites', 'fav_id = ? AND user_id = ?', [$_GET['favorite'], $_SESSION['unique_id']]);
@@ -156,7 +160,7 @@
 				</div>
 				<div class="d-flex flex-column col-6 col-lg-5 col-sm-6">
 					<div class="container">
-						<h1 style="word-break: break-all;"><?php echo $acc->nickname; ?> <?php if($acc_type == 'person') echo '<a href=?favorite='.$acc->unique_id.' class="text-decoration-none icon-star-empty text-warning" title="Add to favorites"></a>'; ?><?php if(R::findOne('favorites', 'fav_id = ? AND user_id = ?', [$acc->unique_id, $_SESSION['unique_id']])) echo '<span class="text-warning" style="font-size: 25px; vertical-align: middle">Added!</span>'; ?></h1>
+						<h1 style="word-break: break-all;"><?php echo $acc->nickname; ?> <?php if($acc_type == 'person') echo '<a href=?favorite='.$acc->unique_id.' class="text-decoration-none icon-star-empty text-warning" title="Add to favorites"></a>'; ?><?php if(isset($_SESSION['unique_id']) && R::findOne('favorites', 'fav_id = ? AND user_id = ?', [$acc->unique_id, $_SESSION['unique_id']])) echo '<span class="text-warning" style="font-size: 25px; vertical-align: middle">Added!</span>'; ?></h1>
 						<p>Profile ID: <?php echo $acc->unique_id; ?></p>
 					</div>
 					<div class="container-fluid soft-shadow p-0 mb-4 bg-white">
@@ -258,7 +262,7 @@
 						<div class="container soft-shadow p-3 bg-white">
 							<p><b>Your profile</b></p>
 							<p><a href=# class="link s-nav text-decoration-none" data-bs-toggle="modal" data-bs-target="#editModal">
-								Settings
+								Edit profile
 							</a></p>
 							<p><a class="link s-nav text-decoration-none" href="php/logout.php?logout_id='.$acc['unique_id'].'">Log out</a></p>
 						</div>
@@ -271,7 +275,7 @@
 			<div class="modal-dialog">
 				<form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="modal-content edit-profile-form">
 					<div class="modal-header">
-						<h5 class="modal-title" id="editModalLabel">Edit the account</h5>
+						<h5 class="modal-title" id="editModalLabel">Edit profile</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
@@ -383,16 +387,58 @@
 			</div>
 		</div>
 	</main>
-	<footer class="bg-dark d-flex justify-content-center align-items-center mt-5">
-		<p class="text-light m-3">Dating Website | <a class="text-light" href=about>About us</a></p>
-	</footer>
-	
+<div class="container-fluid bg-dark text-light m-0 p-0">
+<div class="container">
+  <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-0">
+    <div class="col mb-3">
+      <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+        <img src="logo.svg" height=32>
+      </a>
+      <p class="text-light">&copy; <?php echo date('Y'); ?></p>
+    </div>
+
+    <div class="col mb-3">
+
+    </div>
+
+    <div class="col mb-3">
+      <h5>LEGAL TERMS</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="terms" class="nav-link p-0 text-light">Terms of use </a></li>
+        <li class="nav-item mb-2"><a href="disclaimers" class="nav-link p-0 text-light">Disclosures & Disclaimers</a></li>
+        <li class="nav-item mb-2"><a href="antiscam" class="nav-link p-0 text-light">Anti-Scam Policy </a></li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>PRIVACY INFO</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="privacy" class="nav-link p-0 text-light">Privacy policy</a></li>
+        <li class="nav-item mb-2"><a href="cookies" class="nav-link p-0 text-light">Cookie policy</a></li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>ABOUT</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="about" class="nav-link p-0 text-light">About us</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 <script>
 	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+	
+	<?php 
+		if(isset($thisuser)){
+			echo '$("#set_nick").attr("value", "'.$thisuser->nickname.'");';
+		}
+	?>
 	
 	document.getElementById("chavatar-input").onchange = function() {
 		document.getElementById("chavatar").submit();
@@ -458,7 +504,7 @@
 			url: "php/check-notification.php",
 			data: {id: "<?php echo $_SESSION['unique_id']; ?>"},
 			success: function(r) {
-				if(notData !== r && r !== '<i class="icon-chat"></i> Chat'){
+				if(notData !== r && r !== '<i class="icon-chat"></i><br class="d-none d-lg-flex"> Chat'){
 					$('.nots').html(r);
 					$('#sound').html('');
 					$('#sound').html('<audio autoplay="autoplay"><source src="notification.mp3" type="audio/mpeg"></audio>');
@@ -467,6 +513,33 @@
 			}
 		});
 	}
+	
+	<?php 
+	if(isset($_SESSION['unique_id'])){
+		$s = R::findOne('users', 'unique_id = ?', [$_SESSION['unique_id']]);
+		if(isset($s) && $s->confirm == false){
+			echo '$(".chat-link").attr("href", "#"); $(".chat-link").attr("onclick", "alert(\'Confirm email to start chatting!\')");';
+		}
+	}
+	?>
+	
+	$('.sets-form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: './php/settings.php',
+            data:  new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+            success: function(response){
+                alert(response);
+			}
+		});
+		is_search = true;
+		girl_count = 12;
+		timer = 0;
+    });
 </script>
 </body>
 </html>

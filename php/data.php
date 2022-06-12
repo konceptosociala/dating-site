@@ -2,7 +2,7 @@
 	for($i = 0; $i < count($users); $i++){
 		$row = $users[$i];
 		$span = "";
-		$nots = R::getAll("SELECT * FROM notifications WHERE adresant_id = '{$row['unique_id']}';");
+		$nots = R::getAll("SELECT * FROM notifications WHERE adresant_id = '{$row['unique_id']}' AND adresat_id = '{$_SESSION['unique_id']}';");
 		if(count($nots) > 0){
 			$span = ' <span class="badge bg-danger">'.count($nots).'<span class="visually-hidden">unread messages</span></span>';
 		}

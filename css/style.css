@@ -102,8 +102,10 @@ body::-webkit-scrollbar {
 	background-image: url("https://i.pinimg.com/originals/76/f2/3e/76f23ef08dc1ebabf4589ca0daa1fc14.jpg");
 	background-position: bottom;
 	background-attachment: fixed;
-	background-size: 125%;
+	background-size: cover;
 }
+
+@media s
 
 
 /*EMOJI*/

@@ -39,6 +39,46 @@
     </section>
   </div>
 </main>
+<div class="container-fluid bg-dark text-light m-0 p-0">
+<div class="container">
+  <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-0 border-top">
+    <div class="col mb-3">
+      <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+        <img src="logo.svg" height=32>
+      </a>
+      <p class="text-light">&copy; <?php echo date('Y'); ?></p>
+    </div>
+
+    <div class="col mb-3">
+
+    </div>
+
+    <div class="col mb-3">
+      <h5>LEGAL TERMS</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="terms" class="nav-link p-0 text-light">Terms of use </a></li>
+        <li class="nav-item mb-2"><a href="disclaimers" class="nav-link p-0 text-light">Disclosures & Disclaimers</a></li>
+        <li class="nav-item mb-2"><a href="antiscam" class="nav-link p-0 text-light">Anti-Scam Policy </a></li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>PRIVACY INFO</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="privacy" class="nav-link p-0 text-light">Privacy policy</a></li>
+        <li class="nav-item mb-2"><a href="cookies" class="nav-link p-0 text-light">Cookie policy</a></li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>ABOUT</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="about" class="nav-link p-0 text-light">About us</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
+</div>
   
   <script src="javascript/pass-show-hide.js"></script>
   <script src="javascript/login.js"></script>

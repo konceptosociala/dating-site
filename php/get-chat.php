@@ -18,7 +18,7 @@
                     if($row['msg_type'] == 'text') {
 						$output .= '<div class="chat outgoing">
                                 <div class="details">
-                                    <p>'. $row['msg'] .'</p>
+                                    <p>'. nl2br($row['msg']) .'</p>
                                 </div>
                                 </div>';
 					} else if($row['msg_type'] == 'sticker') {

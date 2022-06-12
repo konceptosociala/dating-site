@@ -19,8 +19,8 @@
 		$extensions_v = ["mp4", "webm"];
 		$types_p = ["image/jpeg", "image/jpg", "image/png"];
 		$types_v = ["video/mp4", "video/webm"];
-		if(in_array($img_ext, $extensions_p) === true){
-			if(in_array($img_type, $types_p) === true){
+		if(in_array($img_ext, $extensions_p) == true){
+			if(in_array($img_type, $types_p) == true){
 				$time = time();
 				$new_img_name = $time.$img_name;
 				if(move_uploaded_file($tmp_name,"images/".$new_img_name)){

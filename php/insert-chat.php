@@ -9,7 +9,8 @@
             $msg_t = R::dispense( 'messages' );
             $msg_t->incoming_msg_id = $incoming_id;
             $msg_t->outgoing_msg_id = $outgoing_id;
-            $msg_t->msg = str_replace("\'", "'", $message);
+            $message = str_replace("\'", "'", $message);
+            $msg_t->msg = str_replace('\r\n', "\r\n", $message);
             $msg_t->msg_type = "text";
             R::store($msg_t);
             

@@ -1,5 +1,9 @@
-<?php if(isset($_SESSION['unique_id'])) $id = $_SESSION['unique_id']; ?>
-
+<?php 
+	if(isset($_SESSION['unique_id'])) {
+		$id = $_SESSION['unique_id']; 
+		echo '
+		
+		
 <script>
 	
 var _wasPageCleanedUp = false;
@@ -8,9 +12,9 @@ function pageCleanup()
     if (!_wasPageCleanedUp)
     {
         $.ajax({
-            type: 'GET',
+            type: \'GET\',
             async: false,
-            url: 'php/set-offline.php?id=<?php echo $id; ?>',
+            url: \'php/set-offline.php?id='.$id.'\',
             success: function ()
             {
                 _wasPageCleanedUp = true;
@@ -26,8 +30,14 @@ $(window).on("unload", function (e)
     pageCleanup();
 });
 
-window.addEventListener('offline', function(e) {
+window.addEventListener(\'offline\', function(e) {
 	pageCleanup();
 });;
 
 </script>
+
+		
+		
+		';
+	}
+?>
